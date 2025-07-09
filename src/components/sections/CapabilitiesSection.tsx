@@ -6,8 +6,18 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Users, Calendar, Palette, DollarSign, MessageSquare, ShieldCheck, Zap, Lightbulb } from "lucide-react";
 
-// Componente de tarjeta estándar
-const CapabilityCard = ({ title, children, className, icon: Icon }: any) => {
+// --- CORRECCIÓN AQUÍ ---
+// Definimos una 'interface' para especificar los tipos de las props
+// en lugar de usar el tipo genérico 'any'.
+interface CapabilityCardProps {
+  title: string;
+  children: React.ReactNode;
+  className?: string;
+  icon: React.ElementType;
+}
+
+// Y la aplicamos al componente.
+const CapabilityCard = ({ title, children, className, icon: Icon }: CapabilityCardProps) => {
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -64,7 +74,7 @@ const CapabilitiesSection = () => {
                                 </div>
                             </CapabilityCard>
                         </div>
- 
+
                         <div className="lg:row-span-2">
                             <CapabilityCard title="Automatización" icon={Zap}>
                                 <h4 className='font-semibold text-white/90 mb-1'>Triggers Inteligentes</h4>
@@ -74,7 +84,7 @@ const CapabilitiesSection = () => {
                                 </div>
                             </CapabilityCard>
                         </div>
- 
+
                         <div>
                             <CapabilityCard title="Estrategia" icon={Calendar}>
                                 <h4 className='font-semibold text-white/90 mb-1'>Plan de Marketing y Medios</h4>
@@ -88,7 +98,7 @@ const CapabilitiesSection = () => {
                                 </div>
                             </CapabilityCard>
                         </div>
- 
+
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -115,7 +125,7 @@ const CapabilitiesSection = () => {
                                 />
                             </div>
                         </motion.div>
- 
+
                         <div>
                             <CapabilityCard title="Reporting" icon={DollarSign}>
                                 <h4 className='font-semibold text-white/90 mb-1'>Rentabilidad Real</h4>
@@ -125,17 +135,17 @@ const CapabilitiesSection = () => {
                                 </div>
                             </CapabilityCard>
                         </div>
-                         
+                        
                         <div>
                             <CapabilityCard title="Seguridad" icon={ShieldCheck}>
                                  <h4 className='font-semibold text-white/90 mb-1'>Privacidad de Datos</h4>
                                  <p>Conexiones seguras machine to machine vía APIs oficiales, datos encriptados y Acuerdos de Confidencialidad (NDA).</p>
                                  <div className="relative mt-4 flex-grow rounded-md overflow-hidden">
-                                    <Image src="/seguridad.avif" alt="Seguridad de Datos" fill className="object-cover opacity-70"/>
+                                     <Image src="/seguridad.avif" alt="Seguridad de Datos" fill className="object-cover opacity-70"/>
                                  </div>
                             </CapabilityCard>
                         </div>
-                         
+                        
                         <div>
                             <CapabilityCard title="Chat AI" icon={MessageSquare}>
                                 <h4 className='font-semibold text-white/90 mb-1'>Que los datos hablen</h4>
@@ -150,18 +160,18 @@ const CapabilitiesSection = () => {
                                 </div>
                             </CapabilityCard>
                         </div>
- 
+
                     </div>
                 </div>
- 
+
                 {/* --- Bloque de texto final con el tamaño y salto de línea corregidos --- */}
                 <p className="text-center text-3xl font-normal text-white mt-20 leading-tight">
                     Todo supervisado por un <span className="font-bold">Marketing Manager</span><br/>
                     a cargo de tu cuenta.
                 </p>
              </div>
-         </section>
-     );
- };
- 
- export default CapabilitiesSection;
+        </section>
+    );
+};
+
+export default CapabilitiesSection;

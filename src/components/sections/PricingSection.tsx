@@ -100,10 +100,6 @@ const PricingSection = () => {
     });
     featureGroups.push(currentGroup); // Push the last group after the loop.
 
-    // Pre-calculate the last feature for efficient and safe access later
-    const lastGroup = featureGroups[featureGroups.length - 1];
-    const lastFeatureInLastGroup = lastGroup?.items?.[lastGroup.items.length - 1];
-
     return (
         <section id="precios" className="bg-white py-20 md:py-28">
             <div className="container mx-auto px-4">
@@ -164,14 +160,14 @@ const PricingSection = () => {
                                                     className="w-full flex justify-between items-center text-left px-4"
                                                 >
                                                     <h4 className="text-base font-bold text-gray-800">{group.header.name}</h4>
-                                                    {/* --- CAMBIO DE TAMAÑO AQUÍ --- */}
                                                     <ChevronDown className={`w-8 h-8 text-[#e91e63] transition-transform duration-200 ${expandedSections[group.header.name] ? 'rotate-180' : ''}`} />
                                                 </button>
                                             </td>
                                         </tr>
                                     )}
                                     {(!group.header || expandedSections[group.header.name]) && group.items.map((feature, featureIndex) => {
-                                        const isLastRow = feature.name === lastFeatureInLastGroup?.name;
+                                        // --- CORRECCIÓN AQUÍ ---
+                                        // La variable 'isLastRow' que no se usaba ha sido eliminada.
                                         const isSubFeature = feature.name === "";
                                         return (
                                             <tr key={feature.name || `sub-feature-${featureIndex}`}>
