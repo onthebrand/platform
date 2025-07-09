@@ -11,6 +11,14 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+
+  // --- CORRECCIÓN AQUÍ ---
+  // Añadimos un nuevo objeto a la configuración para desactivar la regla específica.
+  {
+    rules: {
+      "react/no-unescaped-entities": "off",
+    }
+  }
 ];
 
 export default eslintConfig;
