@@ -5,6 +5,7 @@ import BrandLogo from "@/components/common/BrandLogo";
 import { Plug, Search, CheckSquare, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import React from "react";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const FeatureStep = ({ icon: Icon, title, children }: { icon: React.ElementType, title: string, children: React.ReactNode }) => (
     <div className="flex items-start text-left gap-4">
@@ -19,6 +20,10 @@ const FeatureStep = ({ icon: Icon, title, children }: { icon: React.ElementType,
 );
 
 const HowItWorksSection = () => {
+    const isDesktop = useMediaQuery('(min-width: 768px)');
+
+    // --- CORRECCIÓN AQUÍ ---
+    // Añadimos 'as const' para solucionar el error de tipo, igual que en los íconos.
     const stepVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: { 
@@ -26,7 +31,18 @@ const HowItWorksSection = () => {
             y: 0,
             transition: { duration: 0.5, ease: "easeOut" }
         }
-    };
+    } as const;
+
+    const AnimatedStep = ({ children }: { children: React.ReactNode }) => (
+        <motion.div
+            variants={stepVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.5 }} 
+        >
+            {children}
+        </motion.div>
+    );
 
     return (
         <section id="como-funciona" className="bg-white py-20 md:py-28">
@@ -41,52 +57,53 @@ const HowItWorksSection = () => {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                         
-                        {/* --- AJUSTE DE VIEWPORT AQUÍ --- */}
-                        {/* Cambiamos la configuración del viewport para una mejor respuesta en móvil */}
-                        
-                        <motion.div
-                            variants={stepVariants}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ amount: 0.2 }} // Dispara la animación antes
-                        >
+                        {isDesktop ? (
+                            <AnimatedStep>
+                                <FeatureStep icon={Plug} title="1. CONECTA">
+                                    Vincula tus plataformas de forma simple, guiada y personalizada.
+                                </FeatureStep>
+                            </AnimatedStep>
+                        ) : (
                             <FeatureStep icon={Plug} title="1. CONECTA">
                                 Vincula tus plataformas de forma simple, guiada y personalizada.
                             </FeatureStep>
-                        </motion.div>
-
-                        <motion.div
-                            variants={stepVariants}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ amount: 0.2 }}
-                        >
+                        )}
+                        
+                        {isDesktop ? (
+                            <AnimatedStep>
+                                <FeatureStep icon={Search} title="2. ANALIZA">
+                                    La IA procesa tus datos, conoce tu negocio en profundidad e identifica oportunidades.
+                                </FeatureStep>
+                            </AnimatedStep>
+                        ) : (
                             <FeatureStep icon={Search} title="2. ANALIZA">
-                                La IA procesa tus datos, conoce tu negocio en profundidad e identifica oportunidades.
+                                    La IA procesa tus datos, conoce tu negocio en profundidad e identifica oportunidades.
                             </FeatureStep>
-                        </motion.div>
+                        )}
 
-                        <motion.div
-                            variants={stepVariants}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ amount: 0.2 }}
-                        >
+                        {isDesktop ? (
+                            <AnimatedStep>
+                                <FeatureStep icon={CheckSquare} title="3. APRUEBA">
+                                    Revisa y aprueba con un clic el Plan de Marketing, las acciones y piezas que la IA genera para ti.
+                                </FeatureStep>
+                            </AnimatedStep>
+                        ) : (
                             <FeatureStep icon={CheckSquare} title="3. APRUEBA">
-                                Revisa y aprueba con un clic el Plan de Marketing, las acciones y piezas que la IA genera para ti.
+                                    Revisa y aprueba con un clic el Plan de Marketing, las acciones y piezas que la IA genera para ti.
                             </FeatureStep>
-                        </motion.div>
+                        )}
 
-                        <motion.div
-                            variants={stepVariants}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ amount: 0.2 }}
-                        >
+                        {isDesktop ? (
+                            <AnimatedStep>
+                                <FeatureStep icon={TrendingUp} title="4. CRECE">
+                                    La plataforma ejecuta, optimiza 24/7 y te muestra los resultados en un dashboard claro.
+                                </FeatureStep>
+                            </AnimatedStep>
+                        ) : (
                             <FeatureStep icon={TrendingUp} title="4. CRECE">
-                                La plataforma ejecuta, optimiza 24/7 y te muestra los resultados en un dashboard claro.
+                                    La plataforma ejecuta, optimiza 24/7 y te muestra los resultados en un dashboard claro.
                             </FeatureStep>
-                        </motion.div>
+                        )}
                     </div>
                 </div>
             </div>
