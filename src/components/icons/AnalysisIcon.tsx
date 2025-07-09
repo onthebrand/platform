@@ -1,15 +1,16 @@
-// src/components/icons/AnalysisIcon.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
 
 const iconVariants = {
     initial: { rotate: 0 },
     hover: { rotate: 35, transition: { duration: 0.6, ease: "easeInOut" } }
-};
+} as const;
 
 const AnalysisIcon = ({ className }: { className?: string }) => {
     return (
         <motion.svg
+            initial="initial"
+            whileHover="hover"
             variants={iconVariants}
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
@@ -25,4 +26,5 @@ const AnalysisIcon = ({ className }: { className?: string }) => {
         </motion.svg>
     );
 };
+
 export default AnalysisIcon;
