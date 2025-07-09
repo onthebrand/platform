@@ -19,7 +19,6 @@ const FeatureStep = ({ icon: Icon, title, children }: { icon: React.ElementType,
 );
 
 const HowItWorksSection = () => {
-    // La definición de la animación para cada paso sigue siendo la misma
     const stepVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: { 
@@ -40,17 +39,16 @@ const HowItWorksSection = () => {
                         <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">De datos a crecimiento<br/>en 4 pasos</h2>
                     </div>
 
-                    {/* El contenedor ya no controla la animación */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                         
-                        {/* --- CAMBIO AQUÍ --- */}
-                        {/* Cada elemento ahora tiene su propio disparador 'whileInView' */}
+                        {/* --- AJUSTE DE VIEWPORT AQUÍ --- */}
+                        {/* Cambiamos la configuración del viewport para una mejor respuesta en móvil */}
                         
                         <motion.div
                             variants={stepVariants}
                             initial="hidden"
                             whileInView="visible"
-                            viewport={{ once: true, amount: 0.5 }}
+                            viewport={{ amount: 0.2 }} // Dispara la animación antes
                         >
                             <FeatureStep icon={Plug} title="1. CONECTA">
                                 Vincula tus plataformas de forma simple, guiada y personalizada.
@@ -61,7 +59,7 @@ const HowItWorksSection = () => {
                             variants={stepVariants}
                             initial="hidden"
                             whileInView="visible"
-                            viewport={{ once: true, amount: 0.5 }}
+                            viewport={{ amount: 0.2 }}
                         >
                             <FeatureStep icon={Search} title="2. ANALIZA">
                                 La IA procesa tus datos, conoce tu negocio en profundidad e identifica oportunidades.
@@ -72,7 +70,7 @@ const HowItWorksSection = () => {
                             variants={stepVariants}
                             initial="hidden"
                             whileInView="visible"
-                            viewport={{ once: true, amount: 0.5 }}
+                            viewport={{ amount: 0.2 }}
                         >
                             <FeatureStep icon={CheckSquare} title="3. APRUEBA">
                                 Revisa y aprueba con un clic el Plan de Marketing, las acciones y piezas que la IA genera para ti.
@@ -83,7 +81,7 @@ const HowItWorksSection = () => {
                             variants={stepVariants}
                             initial="hidden"
                             whileInView="visible"
-                            viewport={{ once: true, amount: 0.5 }}
+                            viewport={{ amount: 0.2 }}
                         >
                             <FeatureStep icon={TrendingUp} title="4. CRECE">
                                 La plataforma ejecuta, optimiza 24/7 y te muestra los resultados en un dashboard claro.
