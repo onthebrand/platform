@@ -22,8 +22,6 @@ const FeatureStep = ({ icon: Icon, title, children }: { icon: React.ElementType,
 const HowItWorksSection = () => {
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
-    // --- CORRECCIÓN AQUÍ ---
-    // Añadimos 'as const' para solucionar el error de tipo, igual que en los íconos.
     const stepVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: { 
@@ -32,17 +30,6 @@ const HowItWorksSection = () => {
             transition: { duration: 0.5, ease: "easeOut" }
         }
     } as const;
-
-    const AnimatedStep = ({ children }: { children: React.ReactNode }) => (
-        <motion.div
-            variants={stepVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }} 
-        >
-            {children}
-        </motion.div>
-    );
 
     return (
         <section id="como-funciona" className="bg-white py-20 md:py-28">
@@ -57,52 +44,84 @@ const HowItWorksSection = () => {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                         
+                        {/* --- LÓGICA CONDICIONAL DEFINITIVA --- */}
+                        {/* Si es escritorio, se renderiza el 'motion.div' animado. */}
+                        {/* Si es móvil, se renderiza un 'div' simple y estático. */}
+
                         {isDesktop ? (
-                            <AnimatedStep>
+                            <motion.div
+                                variants={stepVariants}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, amount: 0.5 }}
+                            >
                                 <FeatureStep icon={Plug} title="1. CONECTA">
                                     Vincula tus plataformas de forma simple, guiada y personalizada.
                                 </FeatureStep>
-                            </AnimatedStep>
+                            </motion.div>
                         ) : (
-                            <FeatureStep icon={Plug} title="1. CONECTA">
-                                Vincula tus plataformas de forma simple, guiada y personalizada.
-                            </FeatureStep>
+                            <div>
+                                <FeatureStep icon={Plug} title="1. CONECTA">
+                                    Vincula tus plataformas de forma simple, guiada y personalizada.
+                                </FeatureStep>
+                            </div>
                         )}
                         
                         {isDesktop ? (
-                            <AnimatedStep>
+                           <motion.div
+                                variants={stepVariants}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, amount: 0.5 }}
+                            >
                                 <FeatureStep icon={Search} title="2. ANALIZA">
                                     La IA procesa tus datos, conoce tu negocio en profundidad e identifica oportunidades.
                                 </FeatureStep>
-                            </AnimatedStep>
+                            </motion.div>
                         ) : (
-                            <FeatureStep icon={Search} title="2. ANALIZA">
+                            <div>
+                                <FeatureStep icon={Search} title="2. ANALIZA">
                                     La IA procesa tus datos, conoce tu negocio en profundidad e identifica oportunidades.
-                            </FeatureStep>
+                                </FeatureStep>
+                            </div>
                         )}
 
                         {isDesktop ? (
-                            <AnimatedStep>
+                            <motion.div
+                                variants={stepVariants}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, amount: 0.5 }}
+                            >
                                 <FeatureStep icon={CheckSquare} title="3. APRUEBA">
                                     Revisa y aprueba con un clic el Plan de Marketing, las acciones y piezas que la IA genera para ti.
                                 </FeatureStep>
-                            </AnimatedStep>
+                            </motion.div>
                         ) : (
-                            <FeatureStep icon={CheckSquare} title="3. APRUEBA">
+                            <div>
+                                <FeatureStep icon={CheckSquare} title="3. APRUEBA">
                                     Revisa y aprueba con un clic el Plan de Marketing, las acciones y piezas que la IA genera para ti.
-                            </FeatureStep>
+                                </FeatureStep>
+                            </div>
                         )}
 
                         {isDesktop ? (
-                            <AnimatedStep>
+                           <motion.div
+                                variants={stepVariants}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, amount: 0.5 }}
+                            >
                                 <FeatureStep icon={TrendingUp} title="4. CRECE">
                                     La plataforma ejecuta, optimiza 24/7 y te muestra los resultados en un dashboard claro.
                                 </FeatureStep>
-                            </AnimatedStep>
+                            </motion.div>
                         ) : (
-                            <FeatureStep icon={TrendingUp} title="4. CRECE">
+                            <div>
+                                <FeatureStep icon={TrendingUp} title="4. CRECE">
                                     La plataforma ejecuta, optimiza 24/7 y te muestra los resultados en un dashboard claro.
-                            </FeatureStep>
+                                </FeatureStep>
+                            </div>
                         )}
                     </div>
                 </div>
