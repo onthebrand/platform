@@ -19,21 +19,13 @@ const FeatureStep = ({ icon: Icon, title, children }: { icon: React.ElementType,
 );
 
 const HowItWorksSection = () => {
+    // La definición de la animación para cada paso sigue siendo la misma
     const stepVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: { 
             opacity: 1, 
             y: 0,
-            transition: { duration: 0.6, ease: "easeOut" }
-        }
-    };
-    
-    const containerVariants = {
-        hidden: {},
-        visible: {
-            transition: {
-                staggerChildren: 0.2
-            }
+            transition: { duration: 0.5, ease: "easeOut" }
         }
     };
 
@@ -48,34 +40,56 @@ const HowItWorksSection = () => {
                         <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">De datos a crecimiento<br/>en 4 pasos</h2>
                     </div>
 
-                    <motion.div 
-                        className="grid grid-cols-1 sm:grid-cols-2 gap-8"
-                        variants={containerVariants}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.2 }}
-                    >
-                        <motion.div variants={stepVariants}>
+                    {/* El contenedor ya no controla la animación */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        
+                        {/* --- CAMBIO AQUÍ --- */}
+                        {/* Cada elemento ahora tiene su propio disparador 'whileInView' */}
+                        
+                        <motion.div
+                            variants={stepVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.5 }}
+                        >
                             <FeatureStep icon={Plug} title="1. CONECTA">
                                 Vincula tus plataformas de forma simple, guiada y personalizada.
                             </FeatureStep>
                         </motion.div>
-                        <motion.div variants={stepVariants}>
+
+                        <motion.div
+                            variants={stepVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.5 }}
+                        >
                             <FeatureStep icon={Search} title="2. ANALIZA">
                                 La IA procesa tus datos, conoce tu negocio en profundidad e identifica oportunidades.
                             </FeatureStep>
                         </motion.div>
-                        <motion.div variants={stepVariants}>
+
+                        <motion.div
+                            variants={stepVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.5 }}
+                        >
                             <FeatureStep icon={CheckSquare} title="3. APRUEBA">
                                 Revisa y aprueba con un clic el Plan de Marketing, las acciones y piezas que la IA genera para ti.
                             </FeatureStep>
                         </motion.div>
-                        <motion.div variants={stepVariants}>
+
+                        <motion.div
+                            variants={stepVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.5 }}
+                        >
                             <FeatureStep icon={TrendingUp} title="4. CRECE">
                                 La plataforma ejecuta, optimiza 24/7 y te muestra los resultados en un dashboard claro.
                             </FeatureStep>
                         </motion.div>
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </section>
