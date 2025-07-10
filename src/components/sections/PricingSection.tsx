@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Check, ChevronDown, X } from "lucide-react";
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
+// Las interfaces de datos no cambian
 interface Plan {
     name: string;
     oldPrice: string;
@@ -13,23 +15,18 @@ interface Plan {
     cta: string;
     popular: boolean;
 }
-
 type FeatureValue = string | boolean;
-
 interface FeatureRow {
     name: string;
     isHeader?: false;
     values: FeatureValue[];
 }
-
 interface FeatureHeader {
     name: string;
     isHeader: true;
     values: [];
 }
-
 type PricingFeature = FeatureRow | FeatureHeader;
-
 interface PricingData {
     plans: Plan[];
     features: PricingFeature[];
@@ -70,40 +67,50 @@ const pricingData: PricingData = {
     ]
 };
 
+// Componente para renderizar cada celda de características
+const FeatureCell = ({ value, isPopular, featureName }: { value: FeatureValue, isPopular: boolean, featureName: string }) => {
+    if (typeof value === 'boolean') {
+        return value ? <Check className="w-6 h-6 text-purple-600 mx-auto" /> : <X className="w-6 h-6 text-gray-400 mx-auto" />;
+    }
+    const specialClasses = (value === "Acceso 14 Días Gratis" || value === "Asesoría Prioritaria") ? 'text-sm font-bold text-[#e91e63]'
+        : (featureName === 'Plan de Marketing' && isPopular) ? 'text-xs font-bold text-purple-600'
+        : 'text-xs text-gray-600';
+    return <span className={specialClasses}>{value}</span>;
+};
+
 const PricingSection = () => {
+    // Usamos 'lg' (1024px) como punto de quiebre para la tabla
+    const isDesktop = useMediaQuery('(min-width: 1024px)');
+    
+    // Estado para la vista móvil: ¿qué plan está seleccionado?
+    const [selectedPlanIndex, setSelectedPlanIndex] = useState(0);
+
     const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
         "Negocio": true,
-        "Marketing": false,
-        "Asesoría y Supervisión": false,
+        "Marketing": true, // Dejamos todo abierto por defecto en móvil
+        "Asesoría y Supervisión": true,
     });
 
     const toggleSection = (sectionName: string) => {
         setExpandedSections(prev => ({ ...prev, [sectionName]: !prev[sectionName] }));
     };
 
-    // Group features into collapsible sections
     const featureGroups: Array<{ header?: FeatureHeader; items: FeatureRow[] }> = [];
     let currentGroup: { header?: FeatureHeader; items: FeatureRow[] } = { items: [] };
-
     pricingData.features.forEach(feature => {
         if (feature.isHeader) {
-            // If the current group has items (from before the first header), push it.
-            if (currentGroup.items.length > 0) {
-                featureGroups.push(currentGroup);
-            }
-            // Start a new group with the new header.
+            if (currentGroup.items.length > 0) featureGroups.push(currentGroup);
             currentGroup = { header: feature as FeatureHeader, items: [] };
         } else {
-            // Add the feature row to the current group.
             currentGroup.items.push(feature as FeatureRow);
         }
     });
-    featureGroups.push(currentGroup); // Push the last group after the loop.
+    featureGroups.push(currentGroup);
 
     return (
         <section id="precios" className="bg-white py-20 md:py-28">
             <div className="container mx-auto px-4">
-                <div className="text-center max-w-2xl mx-auto mb-16">
+                <div className="text-center max-w-2xl mx-auto mb-12">
                     <p className="font-semibold text-[#00bcd4] mb-2">
                         Sin contratos anuales y sin comisiones
                     </p>
@@ -115,91 +122,118 @@ const PricingSection = () => {
                     </p>
                 </div>
 
-                <div className="max-w-7xl mx-auto relative mt-16">
-                    <div className="absolute top-[110px] left-[20px] z-10 pointer-events-none">
-                        <Image
-                            src="/lanzamiento-tag.png"
-                            alt="Precios de Lanzamiento"
-                            width={180}
-                            height={180}
-                            className="transform -rotate-[15deg]"
-                        />
-                    </div>
-                    
-                    <table className="w-full text-left border-collapse">
-                        <thead>
-                            <tr>
-                                <th className="w-1/4 p-4 align-bottom"></th>
-                                {pricingData.plans.map((plan, index) => (
-                                    <th key={index} className="w-1/4 p-4 align-bottom">
-                                        <div className={`text-center rounded-xl p-6 ${plan.popular ? 'bg-purple-50 border-2 border-purple-500' : ''}`}>
-                                            <h3 className="text-xl font-bold">{plan.name}</h3>
-                                            <div className="my-2">
-                                                <span className="text-gray-400 line-through">${plan.oldPrice}</span>
-                                                <div className="flex items-baseline justify-center gap-1">
-                                                    <span className="text-5xl font-bold tracking-tighter">${plan.newPrice}</span>
-                                                    <span className="text-gray-500 text-sm">USD/mes</span>
+                {isDesktop ? (
+                    // --- VISTA DE ESCRITORIO (LA TABLA ORIGINAL) ---
+                    <div className="max-w-7xl mx-auto relative mt-16">
+                        <div className="absolute top-[110px] left-[20px] z-10 pointer-events-none">
+                            <Image src="/lanzamiento-tag.png" alt="Precios de Lanzamiento" width={180} height={180} className="transform -rotate-[15deg]"/>
+                        </div>
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr>
+                                    <th className="w-1/4 p-4 align-bottom"></th>
+                                    {pricingData.plans.map((plan, index) => (
+                                        <th key={index} className="w-1/4 p-4 align-bottom">
+                                            <div className={`text-center rounded-xl p-6 ${plan.popular ? 'bg-purple-50 border-2 border-purple-500' : ''}`}>
+                                                <h3 className="text-xl font-bold">{plan.name}</h3>
+                                                <div className="my-2">
+                                                    <span className="text-gray-400 line-through">${plan.oldPrice}</span>
+                                                    <div className="flex items-baseline justify-center gap-1">
+                                                        <span className="text-5xl font-bold tracking-tighter">${plan.newPrice}</span>
+                                                        <span className="text-gray-500 text-sm">USD/mes</span>
+                                                    </div>
                                                 </div>
+                                                <Button className={`w-full ${plan.popular ? 'bg-purple-600 hover:bg-purple-700 text-white' : 'bg-white text-purple-600 border border-purple-300 hover:bg-purple-50'}`}>
+                                                    {plan.cta}
+                                                </Button>
                                             </div>
-                                            <Button className={`w-full ${plan.popular ? 'bg-purple-600 hover:bg-purple-700 text-white' : 'bg-white text-purple-600 border border-purple-300 hover:bg-purple-50'}`}>
-                                                {plan.cta}
-                                            </Button>
-                                        </div>
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {featureGroups.map((group, groupIndex) => (
-                                <React.Fragment key={group.header?.name || groupIndex}>
-                                    {group.header && (
-                                        <tr>
-                                            <td colSpan={5} className="pt-8 pb-2">
-                                                <button
-                                                    onClick={() => toggleSection(group.header!.name)}
-                                                    className="w-full flex justify-between items-center text-left px-4"
-                                                >
-                                                    <h4 className="text-base font-bold text-gray-800">{group.header.name}</h4>
-                                                    <ChevronDown className={`w-8 h-8 text-[#e91e63] transition-transform duration-200 ${expandedSections[group.header.name] ? 'rotate-180' : ''}`} />
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    )}
-                                    {(!group.header || expandedSections[group.header.name]) && group.items.map((feature, featureIndex) => {
-                                        // --- CORRECCIÓN AQUÍ ---
-                                        // La variable 'isLastRow' que no se usaba ha sido eliminada.
-                                        const isSubFeature = feature.name === "";
-                                        return (
-                                            <tr key={feature.name || `sub-feature-${featureIndex}`}>
-                                                <td className={`p-4 font-normal text-gray-700 ${isSubFeature ? 'border-t-0 pt-0' : 'border-t border-gray-200'}`}>{feature.name}</td>
-                                                {feature.values.map((value, planIndex) => {
-                                                    const isPopular = pricingData.plans[planIndex]?.popular;
-                                                    return (
-                                                        <td key={planIndex} className={`p-4 text-center ${isSubFeature ? 'border-t-0 pt-0' : 'border-t border-gray-200'}`}>
-                                                            {typeof value === 'boolean' ? (
-                                                                value ? <Check className="w-6 h-6 text-purple-600 mx-auto" /> : <X className="w-6 h-6 text-gray-400 mx-auto" />
-                                                            ) : (
-                                                                <span className={`${
-                                                                    (value === "Acceso 14 Días Gratis" || value === "Asesoría Prioritaria")
-                                                                        ? 'text-sm font-bold text-[#e91e63]'
-                                                                        : (feature.name === 'Plan de Marketing' && isPopular) 
-                                                                            ? 'text-xs font-bold text-purple-600'
-                                                                            : 'text-xs text-gray-600'
-                                                                }`}>
-                                                                    {value}
-                                                                </span>
-                                                            )}
-                                                        </td>
-                                                    );
-                                                })}
+                                        </th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {featureGroups.map((group, groupIndex) => (
+                                    <React.Fragment key={group.header?.name || groupIndex}>
+                                        {group.header && (
+                                            <tr>
+                                                <td colSpan={5} className="pt-8 pb-2">
+                                                    <button onClick={() => toggleSection(group.header!.name)} className="w-full flex justify-between items-center text-left px-4">
+                                                        <h4 className="text-base font-bold text-gray-800">{group.header.name}</h4>
+                                                        <ChevronDown className={`w-8 h-8 text-[#e91e63] transition-transform duration-200 ${expandedSections[group.header.name] ? 'rotate-180' : ''}`} />
+                                                    </button>
+                                                </td>
                                             </tr>
-                                        );
-                                    })}
-                                </React.Fragment>
+                                        )}
+                                        {(!group.header || expandedSections[group.header.name]) && group.items.map((feature, featureIndex) => (
+                                            <tr key={feature.name || `sub-feature-${featureIndex}`}>
+                                                <td className={`p-4 font-normal text-gray-700 ${feature.name === "" ? 'border-t-0 pt-0' : 'border-t border-gray-200'}`}>{feature.name}</td>
+                                                {feature.values.map((value, planIndex) => (
+                                                    <td key={planIndex} className={`p-4 text-center ${feature.name === "" ? 'border-t-0 pt-0' : 'border-t border-gray-200'}`}>
+                                                        <FeatureCell value={value} isPopular={pricingData.plans[planIndex]?.popular} featureName={feature.name}/>
+                                                    </td>
+                                                ))}
+                                            </tr>
+                                        ))}
+                                    </React.Fragment>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                ) : (
+                    // --- VISTA MÓVIL (SISTEMA DE PESTAÑAS) ---
+                    <div className="w-full mt-8">
+                        {/* Selector de Planes */}
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-8">
+                            {pricingData.plans.map((plan, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setSelectedPlanIndex(index)}
+                                    className={`p-3 text-sm font-bold rounded-lg transition-colors duration-200 ${selectedPlanIndex === index ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-700'}`}
+                                >
+                                    {plan.name}
+                                </button>
                             ))}
-                        </tbody>
-                    </table>
-                </div>
+                        </div>
+
+                        {/* Tarjeta del Plan Seleccionado */}
+                        <div className={`rounded-xl p-6 border-2 ${pricingData.plans[selectedPlanIndex].popular ? 'bg-purple-50 border-purple-500' : 'border-gray-200'}`}>
+                            {selectedPlanIndex === 0 && <Image src="/lanzamiento-tag.png" alt="Precios de Lanzamiento" width={100} height={100} className="transform -rotate-[15deg] mb-4"/>}
+                            <h3 className="text-xl font-bold text-center">{pricingData.plans[selectedPlanIndex].name}</h3>
+                            <div className="my-2 text-center">
+                                <span className="text-gray-400 line-through">${pricingData.plans[selectedPlanIndex].oldPrice}</span>
+                                <div className="flex items-baseline justify-center gap-1">
+                                    <span className="text-5xl font-bold tracking-tighter">${pricingData.plans[selectedPlanIndex].newPrice}</span>
+                                    <span className="text-gray-500 text-sm">USD/mes</span>
+                                </div>
+                            </div>
+                            <Button className={`w-full my-4 ${pricingData.plans[selectedPlanIndex].popular ? 'bg-purple-600 hover:bg-purple-700 text-white' : 'bg-white text-purple-600 border border-purple-300 hover:bg-purple-50'}`}>
+                                {pricingData.plans[selectedPlanIndex].cta}
+                            </Button>
+                        </div>
+                        
+                        {/* Lista de Características del Plan Seleccionado */}
+                        <div className="mt-6">
+                            {pricingData.features.map((feature, featureIndex) => {
+                                if(feature.isHeader) {
+                                    return (
+                                        <h4 key={featureIndex} className="text-base font-bold text-gray-800 mt-6 pt-4 border-t-2">{feature.name}</h4>
+                                    )
+                                }
+                                if(feature.name === "") { // No mostrar las sub-líneas descriptivas en móvil
+                                    return null;
+                                }
+                                return (
+                                    <div key={featureIndex} className="flex justify-between items-center py-3 border-b">
+                                        <p className="text-sm text-gray-700">{feature.name}</p>
+                                        <div className="w-1/3 text-right">
+                                            <FeatureCell value={feature.values[selectedPlanIndex]} isPopular={pricingData.plans[selectedPlanIndex].popular} featureName={feature.name}/>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                )}
             </div>
         </section>
     );
