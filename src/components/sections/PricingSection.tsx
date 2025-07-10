@@ -7,30 +7,13 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
-// Las interfaces de datos no cambian
-interface Plan {
-    name: string;
-    oldPrice: string;
-    newPrice: string;
-    cta: string;
-    popular: boolean;
-}
+// Interfaces de datos (sin cambios)
+interface Plan { name: string; oldPrice: string; newPrice: string; cta: string; popular: boolean; }
 type FeatureValue = string | boolean;
-interface FeatureRow {
-    name: string;
-    isHeader?: false;
-    values: FeatureValue[];
-}
-interface FeatureHeader {
-    name: string;
-    isHeader: true;
-    values: [];
-}
+interface FeatureRow { name: string; isHeader?: false; values: FeatureValue[]; }
+interface FeatureHeader { name: string; isHeader: true; values: []; }
 type PricingFeature = FeatureRow | FeatureHeader;
-interface PricingData {
-    plans: Plan[];
-    features: PricingFeature[];
-}
+interface PricingData { plans: Plan[]; features: PricingFeature[]; }
 
 const pricingData: PricingData = {
     plans: [
@@ -69,23 +52,20 @@ const pricingData: PricingData = {
 
 const FeatureCell = ({ value, isPopular, featureName }: { value: FeatureValue, isPopular: boolean, featureName: string }) => {
     if (typeof value === 'boolean') {
-        return value ? <Check className="w-6 h-6 text-purple-600" /> : <X className="w-6 h-6 text-gray-400" />;
+        return value ? <Check className="w-6 h-6 text-purple-600 inline-block" /> : <X className="w-6 h-6 text-gray-400 inline-block" />;
     }
     
-    // --- CAMBIO 1: Ajuste de color a morado ---
     const specialClasses = (value === "Ilimitadas" || value === "Asesoría Prioritaria") ? 'text-sm font-bold text-purple-600'
         : (value === "Acceso 14 Días Gratis") ? 'text-sm font-bold text-[#e91e63]'
         : (featureName === 'Plan de Marketing' && isPopular) ? 'text-xs font-bold text-purple-600'
         : 'text-xs text-gray-600';
 
-    const alignmentClass = typeof value === 'boolean' ? 'mx-auto' : '';
-    
-    return <span className={`${specialClasses} ${alignmentClass}`}>{value}</span>;
+    return <span className={specialClasses}>{value}</span>;
 };
 
 const PricingSection = () => {
     const isDesktop = useMediaQuery('(min-width: 1024px)');
-    const [selectedPlanIndex, setSelectedPlanIndex] = useState(2); // Inicia con Growth seleccionado
+    const [selectedPlanIndex, setSelectedPlanIndex] = useState(2);
     const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
         "Negocio": true,
         "Marketing": true,
@@ -112,19 +92,12 @@ const PricingSection = () => {
         <section id="precios" className="bg-white py-20 md:py-28">
             <div className="container mx-auto px-4">
                 <div className="text-center max-w-2xl mx-auto mb-12">
-                    <p className="font-semibold text-[#00bcd4] mb-2">
-                        Sin contratos anuales y sin comisiones
-                    </p>
-                    <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">
-                        Planes que Crecen con tu Negocio
-                    </h2>
-                    <p className="text-gray-500 mt-4">
-                        Garantía on-demand. Suscríbete ahora, termina cuando quieras.
-                    </p>
+                    <p className="font-semibold text-[#00bcd4] mb-2">Sin contratos anuales y sin comisiones</p>
+                    <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">Planes que Crecen con tu Negocio</h2>
+                    <p className="text-gray-500 mt-4">Garantía on-demand. Suscríbete ahora, termina cuando quieras.</p>
                 </div>
 
                 {isDesktop ? (
-                    // VISTA DE ESCRITORIO
                     <div className="max-w-7xl mx-auto relative mt-16">
                         <div className="absolute top-[110px] left-[20px] z-10 pointer-events-none">
                             <Image src="/lanzamiento-tag.png" alt="Precios de Lanzamiento" width={180} height={180} className="transform -rotate-[15deg]"/>
@@ -181,7 +154,6 @@ const PricingSection = () => {
                         </table>
                     </div>
                 ) : (
-                    // VISTA MÓVIL
                     <div className="w-full mt-8">
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-8">
                             {pricingData.plans.map((plan, index) => (
@@ -194,7 +166,6 @@ const PricingSection = () => {
                                 </button>
                             ))}
                         </div>
-
                         <div className={`rounded-xl p-6 border-2 ${pricingData.plans[selectedPlanIndex].popular ? 'bg-purple-50 border-purple-500' : 'border-gray-200'}`}>
                             {selectedPlanIndex === 0 && <Image src="/lanzamiento-tag.png" alt="Precios de Lanzamiento" width={100} height={100} className="transform -rotate-[15deg] mb-4"/>}
                             <h3 className="text-xl font-bold text-center">{pricingData.plans[selectedPlanIndex].name}</h3>
@@ -209,22 +180,16 @@ const PricingSection = () => {
                                 {pricingData.plans[selectedPlanIndex].cta}
                             </Button>
                         </div>
-                        
                         <div className="mt-6">
                             {pricingData.features.map((feature, featureIndex) => {
                                 if(feature.isHeader) {
-                                    return (
-                                        <h4 key={featureIndex} className="text-base font-bold text-gray-800 mt-6 pt-4 border-t-2">{feature.name}</h4>
-                                    )
+                                    return <h4 key={featureIndex} className="text-base font-bold text-gray-800 mt-6 pt-4 border-t-2">{feature.name}</h4>
                                 }
-                                if(feature.name === "") {
-                                    return null;
-                                }
+                                if(feature.name === "") return null;
                                 return (
                                     <div key={featureIndex} className="flex justify-between items-center py-3 border-b">
                                         <p className="text-sm text-gray-700 mr-4">{feature.name}</p>
-                                        {/* --- CAMBIO 2: Alinear checks a la derecha --- */}
-                                        <div className="w-1/3 flex justify-end">
+                                        <div className="w-1/3 text-right">
                                             <FeatureCell value={feature.values[selectedPlanIndex]} isPopular={pricingData.plans[selectedPlanIndex].popular} featureName={feature.name}/>
                                         </div>
                                     </div>
