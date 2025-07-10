@@ -67,27 +67,28 @@ const pricingData: PricingData = {
     ]
 };
 
-// Componente para renderizar cada celda de características
+// --- CAMBIO 1: Ajuste de estilos para los textos especiales ---
 const FeatureCell = ({ value, isPopular, featureName }: { value: FeatureValue, isPopular: boolean, featureName: string }) => {
     if (typeof value === 'boolean') {
-        return value ? <Check className="w-6 h-6 text-purple-600 mx-auto" /> : <X className="w-6 h-6 text-gray-400 mx-auto" />;
+        return value ? <Check className="w-6 h-6 text-purple-600" /> : <X className="w-6 h-6 text-gray-400" />;
     }
-    const specialClasses = (value === "Acceso 14 Días Gratis" || value === "Asesoría Prioritaria") ? 'text-sm font-bold text-[#e91e63]'
+    // Se añaden "Ilimitadas" y se mantiene "Asesoría Prioritaria" a la lista de textos en color especial.
+    const specialClasses = (value === "Acceso 14 Días Gratis" || value === "Asesoría Prioritaria" || value === "Ilimitadas") ? 'text-sm font-bold text-[#e91e63]'
         : (featureName === 'Plan de Marketing' && isPopular) ? 'text-xs font-bold text-purple-600'
         : 'text-xs text-gray-600';
-    return <span className={specialClasses}>{value}</span>;
+
+    // En escritorio, los checks se centran. En móvil, se alinean a la izquierda (ver abajo).
+    const alignmentClass = typeof value === 'boolean' ? 'mx-auto' : '';
+    
+    return <span className={`${specialClasses} ${alignmentClass}`}>{value}</span>;
 };
 
 const PricingSection = () => {
-    // Usamos 'lg' (1024px) como punto de quiebre para la tabla
     const isDesktop = useMediaQuery('(min-width: 1024px)');
-    
-    // Estado para la vista móvil: ¿qué plan está seleccionado?
     const [selectedPlanIndex, setSelectedPlanIndex] = useState(0);
-
     const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
         "Negocio": true,
-        "Marketing": true, // Dejamos todo abierto por defecto en móvil
+        "Marketing": true,
         "Asesoría y Supervisión": true,
     });
 
@@ -123,7 +124,7 @@ const PricingSection = () => {
                 </div>
 
                 {isDesktop ? (
-                    // --- VISTA DE ESCRITORIO (LA TABLA ORIGINAL) ---
+                    // VISTA DE ESCRITORIO (sin cambios funcionales)
                     <div className="max-w-7xl mx-auto relative mt-16">
                         <div className="absolute top-[110px] left-[20px] z-10 pointer-events-none">
                             <Image src="/lanzamiento-tag.png" alt="Precios de Lanzamiento" width={180} height={180} className="transform -rotate-[15deg]"/>
@@ -180,9 +181,8 @@ const PricingSection = () => {
                         </table>
                     </div>
                 ) : (
-                    // --- VISTA MÓVIL (SISTEMA DE PESTAÑAS) ---
+                    // --- VISTA MÓVIL ---
                     <div className="w-full mt-8">
-                        {/* Selector de Planes */}
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-8">
                             {pricingData.plans.map((plan, index) => (
                                 <button
@@ -195,7 +195,6 @@ const PricingSection = () => {
                             ))}
                         </div>
 
-                        {/* Tarjeta del Plan Seleccionado */}
                         <div className={`rounded-xl p-6 border-2 ${pricingData.plans[selectedPlanIndex].popular ? 'bg-purple-50 border-purple-500' : 'border-gray-200'}`}>
                             {selectedPlanIndex === 0 && <Image src="/lanzamiento-tag.png" alt="Precios de Lanzamiento" width={100} height={100} className="transform -rotate-[15deg] mb-4"/>}
                             <h3 className="text-xl font-bold text-center">{pricingData.plans[selectedPlanIndex].name}</h3>
@@ -211,7 +210,6 @@ const PricingSection = () => {
                             </Button>
                         </div>
                         
-                        {/* Lista de Características del Plan Seleccionado */}
                         <div className="mt-6">
                             {pricingData.features.map((feature, featureIndex) => {
                                 if(feature.isHeader) {
@@ -219,13 +217,14 @@ const PricingSection = () => {
                                         <h4 key={featureIndex} className="text-base font-bold text-gray-800 mt-6 pt-4 border-t-2">{feature.name}</h4>
                                     )
                                 }
-                                if(feature.name === "") { // No mostrar las sub-líneas descriptivas en móvil
+                                if(feature.name === "") {
                                     return null;
                                 }
                                 return (
                                     <div key={featureIndex} className="flex justify-between items-center py-3 border-b">
                                         <p className="text-sm text-gray-700">{feature.name}</p>
-                                        <div className="w-1/3 text-right">
+                                        {/* --- CAMBIO 2: Alinear checks a la izquierda en móvil --- */}
+                                        <div className="w-1/3 flex justify-start">
                                             <FeatureCell value={feature.values[selectedPlanIndex]} isPopular={pricingData.plans[selectedPlanIndex].popular} featureName={feature.name}/>
                                         </div>
                                     </div>
