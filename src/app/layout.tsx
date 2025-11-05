@@ -1,28 +1,30 @@
 // src/app/layout.tsx
+import './globals.css';
+import GlobalHeader from '@/components/common/GlobalHeader';
+import { Poppins } from 'next/font/google';
 
-import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
-import "./globals.css";
-
-// Añadimos el peso '600' para font-semibold
-const poppins = Poppins({ 
-  subsets: ["latin"],
-  weight: ["300", "400", "600", "700"] // Light, Regular, SemiBold, Bold
+const poppins = Poppins({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '800', '900'],
 });
 
-export const metadata: Metadata = {
-  title: "On the Brand",
-  description: "Marketing para E-commerce Potenciado por IA",
+export const metadata = {
+  title: 'Onthebrand',
+  description: 'Marketing como Estrategia de Negocio',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="es">
-      <body className={poppins.className}>{children}</body>
+    <html lang="es" className={poppins.className}>
+      <body>
+        <GlobalHeader />
+        {children}
+      </body>
     </html>
   );
 }

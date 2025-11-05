@@ -116,7 +116,10 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html,
   body {
     @apply bg-background text-foreground;
+    margin: 0; /* Elimina el margen por defecto del navegador */
+    padding: 0; /* Asegura que no haya padding por defecto */
   }
 }

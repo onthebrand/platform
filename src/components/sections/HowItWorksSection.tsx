@@ -38,7 +38,7 @@ const HowItWorksSection = () => {
                     
                     <div className="text-center md:text-left">
                         <p className="text-sm font-semibold text-purple-600">Cómo funciona</p>
-                        <BrandLogo className="my-4 justify-center md:justify-start" logoSize="text-3xl" circleSize="w-5 h-5"/>
+                        <BrandLogo className="my-4 justify-center md:justify-start" logoSize="text-3xl" circleSize="w-5 h-5" subtitle="AiCommerce"/>
                         <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">De datos a crecimiento<br/>en 4 pasos</h2>
                     </div>
 
