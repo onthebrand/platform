@@ -46,7 +46,7 @@ const MobileMenuPanel = ({ onClose }: MobileMenuPanelProps) => {
 
     { href: "/consultora", label: "Consultora" },
 
-    { href: "/agencia", label: "Agencia", disabled: true },
+    { href: "/agencia", label: "Agencia" },
 
     { href: "/plataforma", label: "Plataforma" },
 

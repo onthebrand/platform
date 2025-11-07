@@ -41,7 +41,7 @@ const BrandLogo = ({ logoSize = 'text-2xl', circleSize = 'w-4 h-4', className, s
 
       {subtitle && (
 
-        <span className="text-gray-700 text-xs font-light leading-none -mt-1.5">
+                <span className="text-gray-700 text-xs font-light leading-tight -mt-1.5">
 
           {subtitle}
 
