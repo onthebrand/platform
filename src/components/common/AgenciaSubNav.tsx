@@ -13,10 +13,8 @@ const AgenciaSubNav = () => {
   const [activeSection, setActiveSection] = useState('');
 
   const navLinks = [
-    { id: "propuesta", href: "/agencia#propuesta", label: "Propuesta" },
+    { id: "metodo", href: "/agencia#metodo", label: "Método" },
     { id: "planes", href: "/agencia#planes", label: "Planes" },
-    { id: "industrias", href: "/agencia#industrias", label: "Industrias" },
-    { id: "contacto", href: "/agencia#contacto", label: "Contacto" },
   ];
 
   useEffect(() => {
