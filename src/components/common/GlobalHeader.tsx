@@ -67,7 +67,7 @@ const GlobalHeader = () => {
 
   const isPlataformaPage = pathname.startsWith('/plataforma');
 
-
+const isAgenciaPage = pathname.startsWith('/agencia');
 
   const isConsultoraPage = pathname.startsWith('/consultora');
 
@@ -215,7 +215,16 @@ const GlobalHeader = () => {
 
 
 
-        <span className="hidden md:block text-sm font-semibold text-gray-400 cursor-not-allowed">Agencia</span>
+        <Link
+        href="/agencia"
+        className={`hidden md:block text-sm font-semibold transition-colors ${
+          isAgenciaPage
+          ? 'text-cyan-500'
+          : 'text-gray-500 hover:text-gray-900'
+        }`}
+        >
+        Agencia
+        </Link>
 
 
 

@@ -26,7 +26,9 @@ const ClosingCtaSection = () => {
         </div>
 
         {/* Barra de Footer integrada en la parte inferior de la sección */}
-        <Footer />
+        <div className="mt-20 md:mt-24">
+          <Footer />
+        </div>
       </div>
     </section>
   );

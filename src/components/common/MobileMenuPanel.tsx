@@ -31,24 +31,17 @@ const MobileMenuPanel = ({ onClose }: MobileMenuPanelProps) => {
   const pathname = usePathname();
 
   const isPlataformaActive = pathname.startsWith('/plataforma');
-
-  // 1. CAMBIO: Añadida variable para Consultora
-
+  const isAgenciaActive = pathname.startsWith('/agencia');
   const isConsultoraActive = pathname.startsWith('/consultora');
 
 
 
   const globalLinks = [
 
-    { href: "/", label: "Home" },
-
-    // 2. CAMBIO: 'disabled: true' eliminado
-
-    { href: "/consultora", label: "Consultora" },
-
-    { href: "/agencia", label: "Agencia" },
-
-    { href: "/plataforma", label: "Plataforma" },
+    { href: "/", label: "Home", disabled: false },
+    { href: "/consultora", label: "Consultora", disabled: false },
+    { href: "/agencia", label: "Agencia", disabled: false },
+    { href: "/plataforma", label: "Plataforma", disabled: false },
 
   ];
 
@@ -95,10 +88,9 @@ const MobileMenuPanel = ({ onClose }: MobileMenuPanelProps) => {
         <div className="flex justify-between items-start mb-6">
 
 
+          {/* Lógica de título actualizada */}
 
-          {/* 3. CAMBIO: Lógica de título actualizada */}
-
-          {isPlataformaActive || isConsultoraActive ? (
+          {isPlataformaActive || isConsultoraActive || isAgenciaActive ? (
 
             <div style={{ display: 'inline-block' }}>
 
@@ -108,9 +100,9 @@ const MobileMenuPanel = ({ onClose }: MobileMenuPanelProps) => {
 
                 <span style={{ display: 'block', color: '#666', fontSize: '0.65rem', fontWeight: 300 }}>
 
-                  {/* Muestra el subtítulo correcto */}
+                  {isAgenciaActive ? "Agencia" :
 
-                  {isPlataformaActive ? "Ai-Commerce" : "Consultoría"}
+                   isPlataformaActive ? "Ai-Commerce" : "Consultoría"}
 
                 </span>
 
@@ -144,9 +136,10 @@ const MobileMenuPanel = ({ onClose }: MobileMenuPanelProps) => {
 
           {globalLinks.map((link) => {
 
-            // 4. CAMBIO: Lógica de 'isActive' actualizada
+            // Lógica de 'isActive' actualizada
 
             const isActive = (pathname === link.href) ||
+                           (link.href === "/agencia" && isAgenciaActive) ||
 
                            (link.href === "/plataforma" && isPlataformaActive) ||
 

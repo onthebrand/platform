@@ -112,6 +112,7 @@ export default function ConsultoraPage() {
   const [num2, setNum2] = useState(0);
   const [humanCheck, setHumanCheck] = useState('');
   const [humanCheckError, setHumanCheckError] = useState('');
+  const [websiteError, setWebsiteError] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
 
   const generateNewQuestion = () => {
@@ -119,6 +120,7 @@ export default function ConsultoraPage() {
     setNum2(Math.floor(Math.random() * 10) + 1);
     setHumanCheck('');
     setHumanCheckError('');
+    setWebsiteError('');
   };
 
   useEffect(() => {
@@ -410,8 +412,28 @@ export default function ConsultoraPage() {
                       return;
                     }
                     setHumanCheckError('');
+
+                    const website = formData.get('website') as string;
+                    const websiteRegex = /^(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/.*)?$/;
+                    if (!website || !websiteRegex.test(website)) {
+                      setWebsiteError('Por favor, ingresa una URL de sitio web válida.');
+                      return;
+                    }
+                    setWebsiteError('');
+
                     setIsSubmitting(true); 
-                    const result = await sendConsultoraEmail(formData);
+
+                    const subject = `Nuevo Mensaje de Consultoría de: ${formData.get('name')}`;
+                    const body = `
+                      <h2>Nuevo Mensaje de Contacto - Consultoría</h2>
+                      <p><strong>Nombre:</strong> ${formData.get('name')}</p>
+                      <p><strong>Empresa:</strong> ${formData.get('company')}</p>
+                      <p><strong>Email:</strong> ${formData.get('email')}</p>
+                      <p><strong>Sitio Web:</strong> ${formData.get('website')}</p>
+                      <p><strong>Mensaje:</strong></p>
+                      <p>${formData.get('message')}</p>
+                    `;
+                    const result = await sendEmail({ subject, body });
                     if (result.success) {
                       setIsSubmitted(true);
                     } else {
@@ -428,8 +450,17 @@ export default function ConsultoraPage() {
                     <input type="text" name="name" id="name" required className="w-full rounded-md border-gray-700 bg-gray-800 p-3 text-white shadow-sm focus:border-cyan-500 focus:ring-cyan-500" />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                    <label htmlFor="company" className="block text-sm font-medium text-gray-300 mb-1">Empresa</label>
+                    <input type="text" name="company" id="company" required className="w-full rounded-md border-gray-700 bg-gray-800 p-3 text-white shadow-sm focus:border-cyan-500 focus:ring-cyan-500" />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">Email Corporativo</label>
                     <input type="email" name="email" id="email" required className="w-full rounded-md border-gray-700 bg-gray-800 p-3 text-white shadow-sm focus:border-cyan-500 focus:ring-cyan-500" />
+                  </div>
+                  <div>
+                    <label htmlFor="website" className="block text-sm font-medium text-gray-300 mb-1">URL Sitio Web</label>
+                    <input type="text" name="website" id="website" placeholder="ejemplo.com" required className="w-full rounded-md border-gray-700 bg-gray-800 p-3 text-white shadow-sm focus:border-cyan-500 focus:ring-cyan-500" />
+                    {websiteError && <p className="mt-2 text-sm text-red-400">{websiteError}</p>}
                   </div>
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">¿Cómo podemos ayudarte?</label>

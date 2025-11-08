@@ -1,19 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { useHeaderVisibility } from "@/components/common/useHeaderVisibility";
 import { motion } from "framer-motion";
 import BrandLogo from '@/components/common/BrandLogo';
+import { AgenciaPageContext, IAgenciaPageContext } from "@/app/agencia/AgenciaPageContext";
 
 const AgenciaSubNav = () => {
   const isHeaderVisible = useHeaderVisibility();
   const isScrolled = !isHeaderVisible;
   const [activeSection, setActiveSection] = useState('');
-
+  const agenciaPageContext = useContext<IAgenciaPageContext | null>(AgenciaPageContext);
+  const handleOpenForm = () => agenciaPageContext?.handleOpenForm();
+  
   const navLinks = [
-    { id: "metodo", href: "/agencia#metodo", label: "Método" },
+       { id: "servicio", href: "/agencia#servicio", label: "Servicio" },
     { id: "planes", href: "/agencia#planes", label: "Planes" },
   ];
 
@@ -44,7 +47,7 @@ const AgenciaSubNav = () => {
       className="hidden md:block w-full border-b border-gray-200 bg-white"
     >
       <div className="container mx-auto px-4 flex items-center justify-between h-14">
-        <div className="flex items-center justify-start">
+                <div className="flex items-center justify-start flex-grow">
           <motion.div
             className="flex-shrink-0 overflow-hidden"
             animate={{ opacity: isScrolled ? 1 : 0, width: isScrolled ? 110 : 0 }}
@@ -71,6 +74,11 @@ const AgenciaSubNav = () => {
           </motion.div>
         </div>
 
+        <div className="hidden md:block">
+          <Button onClick={handleOpenForm} className="rounded-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold transition-colors">
+            Quiero vender más
+          </Button>
+        </div>
       </div>
     </nav>
   );

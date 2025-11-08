@@ -34,7 +34,7 @@ const BrandLogo = ({ logoSize = 'text-2xl', circleSize = 'w-4 h-4', className, s
 
       <div className={`flex items-baseline`}>
 
-        <div className={`bg-[#00bcd4] rounded-full ${circleSize} group-[.text-white]:bg-white`}></div>
+          <div className={`bg-[#00bcd4] rounded-full ${circleSize} group-[.text-white]:bg-white`}></div>
         <span className={`font-light text-[#e91e63] tracking-tighter ${logoSize} group-[.text-white]:text-white`}>onthe<span className="font-bold text-[#9c00ff] group-[.text-white]:text-white">brand</span></span>
 
       </div>
