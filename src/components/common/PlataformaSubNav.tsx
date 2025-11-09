@@ -10,10 +10,15 @@ import BrandLogo from '@/components/common/BrandLogo';
 
 import { useHeaderVisibility } from "./useHeaderVisibility";
 
-const PlataformaSubNav = () => {
+interface PlataformaSubNavProps {
+  onLoginClick: () => void;
+}
+
+const PlataformaSubNav = ({ onLoginClick }: PlataformaSubNavProps) => {
   const [activeSection, setActiveSection] = useState('');
   const isHeaderVisible = useHeaderVisibility();
   const isScrolled = !isHeaderVisible;
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,12 +60,18 @@ const PlataformaSubNav = () => {
               >
                 {isScrolled ? (
                   <Link href="/plataforma" aria-label="Volver al inicio de Plataforma">
-                    <BrandLogo logoSize="text-lg" circleSize="w-2.5 h-2.5" subtitle="AiCommerce" />
+                    <div className="flex items-baseline">
+                      <div className="w-2.5 h-2.5 bg-[#00bcd4] rounded-full"></div>
+                      <span className="text-lg font-light text-[#e91e63] tracking-tighter">
+                        ai<span className="font-bold text-[#9c00ff]">commerce</span>
+                      </span>
+                    </div>
                   </Link>
                 ) : (
-                  <span className="text-base font-bold text-gray-800">
-                    AiCommerce
-                  </span>
+                  <div className="flex items-baseline">
+                    <div className="w-2.5 h-2.5 bg-black rounded-full"></div>
+                    <span className="text-base font-light text-black tracking-tighter">ai<span className="font-bold">commerce</span></span>
+                  </div>
                 )}
               </motion.div>
             </AnimatePresence>
@@ -72,19 +83,12 @@ const PlataformaSubNav = () => {
         </div>
 
         <div className="hidden md:block" style={{ textAlign: 'right' }}>
-          <Button asChild variant="outline" className="rounded-full text-sm px-4 py-2">
-            <Link
-              href="https://app.onthebrand.cl"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2"
-            >
+          <Button onClick={onLoginClick} variant="outline" className="rounded-full text-sm px-4 py-2">
               Login
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
                 <path fillRule="evenodd" d="M3 10a.75.75
  0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
               </svg>
-            </Link>
           </Button>
         </div>
 

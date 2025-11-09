@@ -3,9 +3,10 @@
 
 import { Button } from "@/components/ui/button";
 import { Check, ChevronDown, X } from "lucide-react";
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Image from 'next/image';
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { PlataformaPageContext } from "@/app/plataforma/PlataformaPageContext";
 
 // Interfaces de datos (sin cambios)
 interface Plan { name: string; oldPrice: string; newPrice: string; cta: string; popular: boolean; }
@@ -64,6 +65,8 @@ const FeatureCell = ({ value, isPopular, featureName }: { value: FeatureValue, i
 };
 
 const PricingSection = () => {
+    const context = useContext(PlataformaPageContext);
+    const onOpenForm = context?.onOpenForm;
     const isDesktop = useMediaQuery('(min-width: 1024px)');
     const [selectedPlanIndex, setSelectedPlanIndex] = useState(2);
     const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
@@ -117,7 +120,7 @@ const PricingSection = () => {
                                                         <span className="text-gray-500 text-sm">USD/mes</span>
                                                     </div>
                                                 </div>
-                                                <Button className={`w-full ${plan.popular ? 'bg-purple-600 hover:bg-purple-700 text-white' : 'bg-white text-purple-600 border border-purple-300 hover:bg-purple-50'}`}>
+                                                <Button onClick={() => onOpenForm?.(plan.name)} className={`w-full transform hover:scale-105 transition-transform duration-200 ${plan.popular ? 'bg-purple-600 hover:bg-purple-700 text-white' : 'bg-white text-purple-600 border border-purple-300 hover:bg-purple-50'}`}>
                                                     {plan.cta}
                                                 </Button>
                                             </div>
@@ -176,7 +179,7 @@ const PricingSection = () => {
                                     <span className="text-gray-500 text-sm">USD/mes</span>
                                 </div>
                             </div>
-                            <Button className={`w-full my-4 ${pricingData.plans[selectedPlanIndex].popular ? 'bg-purple-600 hover:bg-purple-700 text-white' : 'bg-white text-purple-600 border border-purple-300 hover:bg-purple-50'}`}>
+                            <Button onClick={() => onOpenForm?.(pricingData.plans[selectedPlanIndex].name)} className={`w-full my-4 transform hover:scale-105 transition-transform duration-200 ${pricingData.plans[selectedPlanIndex].popular ? 'bg-purple-600 hover:bg-purple-700 text-white' : 'bg-white text-purple-600 border border-purple-300 hover:bg-purple-50'}`}>
                                 {pricingData.plans[selectedPlanIndex].cta}
                             </Button>
                         </div>

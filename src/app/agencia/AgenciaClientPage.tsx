@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Zap, Target, LayoutDashboard, Check, Palette } from 'lucide-react';
 import Footer from '@/components/common/Footer';
@@ -12,10 +12,12 @@ import { useHeaderVisibility } from '@/components/common/useHeaderVisibility';
 const plans = [
   {
     name: "Plan Start",
-    price: "$190",
+    price: "$190.000",
+    setupFee: "$100.000 + IVA (pago único)",
     description: "Ideal para Microempresas.",
     features: [
       "1 campaña (Google Search o Performance Max)",
+      "Setup fee mes 1 (GTM, GA4, Ads)",
       "Optimización mensual",
       "Dashboard simple",
       "Hasta $300 USD de inversión mensual",
@@ -24,10 +26,12 @@ const plans = [
   },
   {
     name: "Plan Smart",
-    price: "$290",
+    price: "$290.000",
+    setupFee: "$150.000 + IVA (pago único)",
     description: "Perfecto para PYMEs.",
     features: [
-      "2 campañas (Google Search y P.Max o Meta)",
+      "2 campañas (Google Search y Performance Max o Meta)",
+      "Setup fee mes 1 (GTM, GA4, Ads)",
       "Optimización semanal",
       "Gráficas con IA",
       "Dashboard de resultados",
@@ -38,15 +42,17 @@ const plans = [
   },
   {
     name: "Plan Pro",
-    price: "$490",
+    price: "$490.000",
+    setupFee: "$250.000 + IVA (pago único)",
     description: "Para PYMEs con inversión activa.",
     features: [
       "Google y Meta",
       "Campañas de Remarketing",
-      "Gráfica con IA",
+      "Setup fee mes 1 (GTM, GA4, Ads)",
+      "Graficas con IA",
       "Embudo completo en Dashboard",
       "Optimización semanal",
-      "sobre $1000 USD de inversión mensual",
+      "Sobre $1000 USD de inversión mensual",
     ],
     cta: "Elegir Plan Pro"
   },
@@ -67,6 +73,15 @@ export default function AgenciaClientPage({ children }: { children: React.ReactN
   };
 
   const isHeaderVisible = useHeaderVisibility();
+
+  useEffect(() => {
+    const openForm = () => handleOpenForm();
+    window.addEventListener('open-agencia-form', openForm);
+
+    return () => {
+      window.removeEventListener('open-agencia-form', openForm);
+    };
+  }, []);
 
   return (
     <AgenciaPageContext.Provider value={contextValue}>
@@ -196,14 +211,17 @@ export default function AgenciaClientPage({ children }: { children: React.ReactN
                   <h3 className="text-2xl font-bold text-center">{plan.name}</h3>
                   <p className="text-gray-500 text-center mt-2 h-10">{plan.description}</p>
                   <div className="text-center my-6">
-                    <span className="text-4xl font-bold">{plan.price}</span>
-                    {plan.price.startsWith('$') && <span className="text-gray-500">/mes + IVA</span>}
+                    <div>
+                      <span className="text-4xl font-bold">{plan.price}</span>
+                      {plan.price.startsWith('$') && <span className="text-gray-500"> CLP/mes + IVA</span>}
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">{plan.setupFee}</p>
                   </div>
                   <ul className="space-y-3 mb-8">
                     {plan.features.map((feature) => (
                       <li key={feature} className="flex items-start">
                         <Check className="w-4 h-4 text-cyan-500 mr-3 mt-1 flex-shrink-0" />
-                        <span className="text-sm text-gray-700">{feature}</span>
+                        <span className="text-sm text-gray-700 text-left">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -215,9 +233,6 @@ export default function AgenciaClientPage({ children }: { children: React.ReactN
                 </motion.div>
               ))}
             </div>
-            <p className="text-center text-sm text-gray-600 mt-8">
-              * Setup Fee de $250 - $500 USD (pago único) para configuración de tracking (GTM, GA4, Ads).
-            </p>
           </div>
         </section>
 

@@ -1,8 +1,13 @@
-import React from 'react';
+// src/components/sections/ClosingCtaSection.tsx
+"use client";
+
+import React, { useContext } from 'react';
 import { Button } from "@/components/ui/button";
 import Footer from '../common/Footer';
+import { PlataformaPageContext } from '@/app/plataforma/PlataformaPageContext';
 
 const ClosingCtaSection = () => {
+  const context = useContext(PlataformaPageContext);
   return (
     // Degradado: #e91e63 (arriba) a #9c00ff (abajo)
     <section className="bg-gradient-to-b from-[#e91e63] to-[#9c00ff] text-white py-20 md:py-24">
@@ -18,7 +23,8 @@ const ClosingCtaSection = () => {
             Súbete ahora a la era de la IA.
           </p>
           <Button
-            className="mt-8 bg-white text-purple-700 font-bold hover:bg-gray-200 py-6 px-8 rounded-lg text-base"
+            onClick={() => context?.onOpenForm('Starter')}
+            className="mt-8 bg-white text-purple-700 font-bold hover:bg-gray-200 py-6 px-8 rounded-lg text-base transform hover:scale-105 transition-transform duration-200"
             size="lg"
           >
             Solicita Hoy 14 Días de Prueba Gratis

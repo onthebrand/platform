@@ -3,12 +3,14 @@
 // Página principal de la sección de Consultoría (v7)
 // Añade validación anti-spam (pregunta matemática)
 
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Brain, Users, Target, LineChart, Presentation, ArrowRight, Mail, CheckCircle, Loader2, RefreshCw } from 'lucide-react';
 import Image from 'next/image';
-import { sendConsultoraEmail } from './actions';
+import { sendEmail } from '@/app/consultora/actions';
 import Footer from '@/components/common/Footer';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 // (Los arrays 'services' e 'industries' se mantienen idénticos a la v3)
 const services = [
@@ -77,14 +79,51 @@ const services = [
 ];
 
 const industries = [
-  "Retail y Consumo Masivo",
-  "Banca y Finanzas",
-  "Educación",
-  "Salud y Bienestar",
-  "Inmobiliario y Construcción",
-  "Automotriz",
-  "Tecnología y Telecomunicaciones",
-  "Industria y B2B",
+  {
+    name: "Banca, Finanzas y Seguros",
+    logos: [
+      { src: "/banca-finanzas-seguros/Bci_Logotype.svg", alt: "Bci", sizeClass: "h-8" },
+      { src: "/banca-finanzas-seguros/Banco_de_Chile_logo.svg", alt: "Banco de Chile", sizeClass: "h-12" },
+      { src: "/banca-finanzas-seguros/1-Transbank_CJ_Color_300_300px.svg", alt: "Transbank", sizeClass: "h-9" },
+      { src: "/banca-finanzas-seguros/1.Onepay_FB_300px.svg", alt: "Onepay", sizeClass: "h-6" },
+      { src: "/banca-finanzas-seguros/1.Webpay_FB_300px.svg", alt: "Webpay", sizeClass: "h-7" },
+      { src: "/banca-finanzas-seguros/Betterfly_Earth_sin_sello_sin_fondo_SVG.svg", alt: "Betterfly", sizeClass: "h-8" },
+      { src: "/banca-finanzas-seguros/BICE_logo.svg", alt: "BICE", sizeClass: "h-13" },
+      { src: "/banca-finanzas-seguros/hdi-logo.svg", alt: "HDI", sizeClass: "h-16" }, // Agrandado
+      { src: "/banca-finanzas-seguros/mutual-logo.svg", alt: "Mutual", sizeClass: "h-16" }, // Agrandado
+    ],
+  },
+  {
+    name: "Retail y Consumo Masivo",
+    logos: [
+      { src: "/logos/retail/cencosud.svg", alt: "Cencosud", sizeClass: "h-8" },
+      { src: "/logos/retail/ripley.svg", alt: "Ripley", sizeClass: "h-8" },
+    ],
+  },
+  {
+    name: "Educación",
+    logos: [{ src: "/logos/educacion/inacap.svg", alt: "INACAP" }],
+  },
+  {
+    name: "Salud y Bienestar",
+    logos: [],
+  },
+  {
+    name: "Inmobiliario y Construcción",
+    logos: [],
+  },
+  {
+    name: "Automotriz",
+    logos: [],
+  },
+  {
+    name: "Tecnología y Telecomunicaciones",
+    logos: [],
+  },
+  {
+    name: "Industria y B2B",
+    logos: [],
+  },
 ];
 
 // Icono simple de Check
@@ -106,6 +145,8 @@ const CheckIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 export default function ConsultoraPage() {
   const [activeService, setActiveService] = useState(services[2]);
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const [selectedIndustry, setSelectedIndustry] = useState(industries[0]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [num1, setNum1] = useState(0);
@@ -121,6 +162,41 @@ export default function ConsultoraPage() {
     setHumanCheck('');
     setHumanCheckError('');
     setWebsiteError('');
+  };
+
+  const consultores = [
+    { name: "Omar Mora", title: "CEO & Head of Growth", img: "/omar-mora.png", bio: "Socio fundador de Onthebrand con +18 años de experiencia en Marketing y Publicidad, certificado en Growth Marketing en San Francisco, EEUU. Omar traduce los desafíos del negocio en estrategias de crecimiento claras y medibles." },
+    { name: "Daniel Albornoz", title: "Finance & Data Lead", img: "/daniel-albornoz.png", bio: "Experto en modelamiento y visualización de datos, Daniel convierte la data cruda en insights accionables que impulsan el crecimiento. Su conocimiento financiero permite proyectar asertivamente el impacto de las acciones de marketing en el negocio." },
+    { name: "Sebastián Solar", title: "Head of Strategy", img: "/sebastian-solar.png", bio: "Sebastián, con +15 años de experiencia en consultoras y liderando marcas líderes B2B y B2C combina data + creatividad + tecnología para generar estrategias con impacto centrado en las personas." },
+    { name: "Rafael Pabón", title: "Head of Brands", img: "/rafael-pabon.png", bio: "Rafael con vasta experiencia en agencias multinacionales, más de 50 premios y jurado en Festivales de Creatividad y Efectividad, lidera la mirada creativa de las estrategias, siempre velando por el equilibrio entre Branding y Performance." },
+  ];
+
+  const ConsultorCard = ({ consultor }: { consultor: typeof consultores[0] }) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+      target: ref,
+      offset: ["start end", "end start"]
+    });
+  
+    const grayscale = useTransform(scrollYProgress, [0.3, 0.5, 0.7], [1, 0, 1]);
+    const opacity = useTransform(scrollYProgress, [0.3, 0.5, 0.7], [0.7, 1, 0.7]);
+  
+    return (
+      <motion.div
+        ref={ref}
+        className="text-center group"
+        variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+        transition={{ duration: 0.5 }}
+        style={isDesktop ? {} : { opacity }}
+      >
+        <div className="relative w-40 h-40 mx-auto mb-4 rounded-full overflow-hidden">
+          <Image src={consultor.img} alt={`Foto de ${consultor.name}`} fill className={`object-cover transition-all duration-500 ${isDesktop ? 'grayscale group-hover:grayscale-0' : ''}`} />
+        </div>
+        <h3 className="font-bold text-lg text-gray-900">{consultor.name}</h3>
+        <p className="text-sm text-cyan-600 font-medium">{consultor.title}</p>
+        <p className="text-sm text-gray-600 mt-2 max-h-0 opacity-0 transition-all duration-500 ease-in-out group-hover:max-h-screen group-hover:opacity-100">{consultor.bio}</p>
+      </motion.div>
+    );
   };
 
   useEffect(() => {
@@ -247,30 +323,8 @@ export default function ConsultoraPage() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ staggerChildren: 0.1 }}
           >
-            {[
-              { name: "Omar Mora", title: "CEO & Head of Growth", img: "/omar-mora.png", bio: "Socio fundador de Onthebrand con +18 años de experiencia en Marketing y Publicidad, certificado en Growth Marketing en San Francisco, EEUU. Omar traduce los desafíos del negocio en estrategias de crecimiento claras y medibles." },
-              { name: "Daniel Albornoz", title: "Finance & Data Lead", img: "/daniel-albornoz.png", bio: "Experto en modelamiento y visualización de datos, Daniel convierte la data cruda en insights accionables que impulsan el crecimiento. Su conocimiento financiero permite proyectar asertivamente el impacto de las acciones de marketing en el negocio." },
-              { name: "Sebastián Solar", title: "Head of Strategy", img: "/sebastian-solar.png", bio: "Sebastián, con +15 años de experiencia en consultoras y liderando marcas líderes B2B y B2C combina data + creatividad + tecnología para generar estrategias con impacto centrado en las personas." },
-              { name: "Rafael Pabón", title: "Head of Brands", img: "/rafael-pabon.png", bio: "Rafael con vasta experiencia en agencias multinacionales, más de 50 premios y jurado en Festivales de Creatividad y Efectividad, lidera la mirada creativa de las estrategias, siempre velando por el equilibrio entre Branding y Performance." },
-            ].map(consultor => (
-              <motion.div 
-                key={consultor.name} 
-                className="text-center"
-                variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="relative w-40 h-40 mx-auto mb-4 rounded-full overflow-hidden">
-                  <Image 
-                    src={consultor.img} 
-                    alt={`Foto de ${consultor.name}`} 
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105" 
-                  />
-                </div>
-                <h3 className="font-bold text-lg text-gray-900">{consultor.name}</h3>
-                <p className="text-sm text-cyan-600 font-medium">{consultor.title}</p>
-                <p className="text-sm text-gray-600 mt-2">{consultor.bio}</p>
-              </motion.div>
+            {consultores.map(consultor => (
+              <ConsultorCard key={consultor.name} consultor={consultor} />
             ))}
           </motion.div>
         </div>
@@ -301,72 +355,137 @@ export default function ConsultoraPage() {
               Un Ecosistema de Soluciones de Marketing
             </h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
-            {/* Columna de Servicios */}
-            <div className="flex flex-col gap-y-2 -translate-y-1">
-              {services.map((service, index) => (
-                <button
-                  key={service.id}
-                  onMouseEnter={() => setActiveService(service)}
-                  onClick={() => setActiveService(service)}
-                  className={`p-4 rounded-lg text-left transition-all duration-300 ${
-                    activeService.id === service.id
-                      ? 'bg-gradient-to-r from-cyan-500 to-purple-600 shadow-lg'
-                      : 'hover:bg-gray-800'
-                  }`}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className={`flex-shrink-0 w-10 h-10 ${activeService.id === service.id ? 'text-white' : service.color} rounded-md flex items-center justify-center`}>
-                      {React.cloneElement(service.icon, { strokeWidth: 2, className: "w-6 h-6" })}
+          
+          {isDesktop ? (
+            <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+              {/* Columna de Servicios */}
+              <div className="flex flex-col gap-y-2 -translate-y-1">
+                {services.map((service) => (
+                  <button
+                    key={service.id}
+                    onMouseEnter={() => setActiveService(service)}
+                    onClick={() => setActiveService(service)}
+                    className={`p-4 rounded-lg text-left transition-all duration-300 ${
+                      activeService.id === service.id
+                        ? 'bg-gradient-to-r from-cyan-500 to-purple-600 shadow-lg'
+                        : 'hover:bg-gray-800'
+                    }`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className={`flex-shrink-0 w-10 h-10 ${activeService.id === service.id ? 'text-white' : service.color} rounded-md flex items-center justify-center`}>
+                        {React.cloneElement(service.icon, { strokeWidth: 2, className: "w-6 h-6" })}
+                      </div>
+                      <h3 className={`text-base font-semibold ${activeService.id === service.id ? 'text-white' : 'text-gray-300'}`}>{service.title}</h3>
                     </div>
-                    <h3 className={`text-base font-semibold ${activeService.id === service.id ? 'text-white' : 'text-gray-300'}`}>{service.title}</h3>
-                  </div>
-                </button>
-              ))}
-            </div>
+                  </button>
+                ))}
+              </div>
 
-            {/* Columna de Contenido */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeService.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="relative bg-black/30 backdrop-blur-sm border border-white/10 rounded-lg p-8"
-              >
-                <h3 className="text-xl font-bold text-white mb-4">{activeService.title}</h3>
-                <ul className="space-y-3">
-                  {activeService.items.map((item) => (
-                    <li key={item} className="flex items-start text-gray-700">
-                      <CheckIcon className="w-5 h-5 text-cyan-400 mr-3 flex-shrink-0 mt-1" />
-                      <span className="text-gray-300">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+              {/* Columna de Contenido */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeService.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="relative bg-black/30 backdrop-blur-sm border border-white/10 rounded-lg p-8"
+                >
+                  <h3 className="text-xl font-bold text-white mb-4">{activeService.title}</h3>
+                  <ul className="space-y-3">
+                    {activeService.items.map((item) => (
+                      <li key={item} className="flex items-start">
+                        <CheckIcon className="w-5 h-5 text-cyan-400 mr-3 flex-shrink-0 mt-1" />
+                        <span className="text-gray-300">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          ) : (
+            // Layout de Acordeón para móvil
+            <Accordion type="single" collapsible defaultValue={activeService.id} className="w-full max-w-md mx-auto">
+              {services.map((service) => (
+                <AccordionItem key={service.id} value={service.id} className="border-b border-white/20">
+                  <AccordionTrigger className="py-4 text-white hover:no-underline">
+                    <div className="flex items-center gap-4 text-left">
+                      <div className={`flex-shrink-0 w-10 h-10 ${service.color} rounded-md flex items-center justify-center`}>
+                        {React.cloneElement(service.icon, { strokeWidth: 2, className: "w-6 h-6" })}
+                      </div>
+                      <h3 className="text-base font-semibold text-gray-300">{service.title}</h3>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="bg-black/20 rounded-b-lg -mx-4 px-4">
+                    <ul className="space-y-3 pt-4">
+                      {service.items.map((item) => (
+                        <li key={item} className="flex items-start">
+                          <CheckIcon className="w-5 h-5 text-cyan-400 mr-3 flex-shrink-0 mt-1" />
+                          <span className="text-gray-300">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          )}
         </div>
       </motion.section>
 
       {/* --- Sección Rubros (Sin Cambios) --- */}
-      <section id="industrias" className="py-16 md:py-24">
+      <section id="industrias" className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 text-center">
-          <span className="text-sm font-semibold text-cyan-500 uppercase">Industrias</span>
-          <h2 className="text-3xl font-bold text-gray-900 mt-2 mb-10">
-            Experiencia con marcas líderes en múltiples rubros
-          </h2>
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-4xl mx-auto">
-            {industries.map((industry) => (
-              <span 
-                key={industry} 
-                className="bg-gray-100 text-gray-700 font-medium py-2 px-4 rounded-full text-sm"
-              >
-                {industry}
-              </span>
-            ))}
+          <div className="max-w-3xl mx-auto">
+            <span className="text-sm font-semibold text-cyan-500 uppercase">Industrias</span>
+            <h2 className="text-3xl font-bold text-gray-900 mt-2">
+              Experiencia con marcas líderes en múltiples rubros
+            </h2>
           </div>
+
+          {/* Selector de Industrias como Carrusel con indicadores */}
+          <div className="relative mt-10 mb-12 md:mx-auto max-w-4xl">
+            <div className="overflow-x-auto pb-4 no-scrollbar md:overflow-x-visible">
+              <div className="flex justify-start gap-3 md:flex-wrap md:justify-center md:gap-4 px-4 md:px-0">
+                {industries.map((industry) => (
+                  <button
+                    key={industry.name}
+                    onClick={() => setSelectedIndustry(industry)}
+                    className={`flex-shrink-0 md:flex-shrink whitespace-nowrap font-medium py-2 px-5 rounded-full text-sm transition-all duration-200 ${
+                      selectedIndustry.name === industry.name
+                        ? 'bg-cyan-500 text-white shadow-md scale-105'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >{industry.name}</button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Área de Logos */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedIndustry.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="flex flex-wrap justify-center items-center gap-x-12 gap-y-10 max-w-4xl mx-auto min-h-[120px]"
+            >
+              {selectedIndustry.logos.length > 0 ? (
+                selectedIndustry.logos.map((logo) => (
+                  <div key={logo.src} className="h-16 flex items-center w-32">
+                    <Image src={logo.src} alt={logo.alt} width={140} height={60} className={`object-contain mx-auto filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all ${logo.sizeClass || 'h-8'}`} />
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500">
+                  Próximamente agregaremos los logos de nuestros clientes en esta industria.
+                </p>
+              )}
+            </motion.div>
+          </AnimatePresence>
+
         </div>
       </section>
 
@@ -392,7 +511,7 @@ export default function ConsultoraPage() {
               omar@onthebrand.cl
             </a>
           </div>
-          
+
           {/* Contenedor para el formulario y el mensaje de éxito */}
           <div className="relative min-h-[440px]">
             <AnimatePresence mode="wait">

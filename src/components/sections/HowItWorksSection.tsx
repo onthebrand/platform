@@ -38,7 +38,12 @@ const HowItWorksSection = () => {
                     
                     <div className="text-center md:text-left">
                         <p className="text-sm font-semibold text-purple-600">Cómo funciona</p>
-                        <BrandLogo className="my-4 justify-center md:justify-start" logoSize="text-3xl" circleSize="w-5 h-5" subtitle="AiCommerce"/>
+                        <div className="my-4 flex items-baseline justify-center md:justify-start">
+                            <div className="w-5 h-5 bg-[#00bcd4] rounded-full"></div>
+                            <span className="text-3xl font-light text-[#e91e63] tracking-tighter">
+                                ai<span className="font-bold text-[#9c00ff]">commerce</span>
+                            </span>
+                        </div>
                         <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">De datos a crecimiento<br/>en 4 pasos</h2>
                     </div>
 

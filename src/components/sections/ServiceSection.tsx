@@ -74,7 +74,7 @@ const ServiceSection = () => {
         </div>
 
         <div className="mt-16">
-          <Button size="lg" className="bg-[#00bcd4] text-white hover:bg-[#00a5b8] hover:text-white px-8 py-6 text-base font-bold">
+          <Button size="lg" className="bg-[#00bcd4] text-white hover:bg-[#00a5b8] hover:text-white px-6 md:px-8 py-6 text-sm font-bold transform hover:scale-105 transition-transform duration-200">
             Solicita tu Prueba Gratuita de 14 Días
             <CheckCircle2 className="ml-2 h-5 w-5" />
           </Button>

@@ -1,14 +1,16 @@
 // src/components/sections/HeroSection.tsx
 
 "use client";
-
+import React, { useContext } from 'react';
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Image from 'next/image';
+import { PlataformaPageContext } from '@/app/plataforma/PlataformaPageContext';
 
 const HeroSection = () => {
   const containerVariants = { hidden: {}, visible: { transition: { staggerChildren: 0.3 } } };
   const itemVariants = { hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { duration: 0.6 } } };
+  const context = useContext(PlataformaPageContext);
 
   return (
     <>
@@ -26,7 +28,7 @@ const HeroSection = () => {
 
       {/* El div.h-24 que compensaba el <nav> ha sido eliminado */}
 
-      <div className="relative container mx-auto px-4 z-20 text-center md:text-left">
+      <div className="relative container mx-auto px-4 z-20 text-center">
 
         <motion.div 
           className="grid md:grid-cols-1 gap-12 items-center pt-24 md:pt-32 pb-20 md:pb-24"
@@ -34,18 +36,21 @@ const HeroSection = () => {
           initial="hidden"
           animate="visible"
         >
-          <motion.div variants={itemVariants}>
+          <motion.div variants={itemVariants} className="flex flex-col items-center">
             <h1 className="text-4xl lg:text-5xl font-bold tracking-tighter leading-tight mb-6">
               Conecta tu Ecommerce a un cerebro de <br /> 
               <span className="text-white">Inteligencia Artificial</span>
             </h1>
-            <p className="text-base text-gray-200 max-w-lg mx-auto md:mx-0 mb-8">
+            <p className="text-base text-gray-200 max-w-lg mx-auto mb-8">
               Gestionamos tus campañas de Marketing Digital con los datos de tu negocio, combinando estrategia humana y la precisión de la IA en un servicio on-demand.
             </p>
-            <div className="flex justify-center md:justify-start">
-                <Button size="lg" className="bg-gradient-to-r from-[#9c00ff] to-[#e91e63] text-white shadow-md hover:shadow-lg transition-shadow duration-200 px-8 py-6 text-base">
-                  Solicita una Prueba Gratis por 14 días
-                </Button>
+            <div className="flex justify-center">
+              <Button 
+                size="lg" 
+                onClick={() => context?.onOpenForm('Starter')}
+                className="bg-gradient-to-r from-[#9c00ff] to-[#e91e63] text-white shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200 px-6 py-6 text-base">
+                Solicita una Prueba Gratis por 14 días
+              </Button>
             </div>
           </motion.div>
 

@@ -6,13 +6,13 @@
 
 "use client";
 
-
+import React from 'react';
 
 import Link from 'next/link';
 
 import { usePathname } from 'next/navigation';
 
-import { X } from 'lucide-react';
+import { X, ArrowRight } from 'lucide-react';
 
 import BrandLogo from '@/components/common/BrandLogo';
 
@@ -44,7 +44,18 @@ const MobileMenuPanel = ({ onClose }: MobileMenuPanelProps) => {
     { href: "/plataforma", label: "Plataforma", disabled: false },
 
   ];
-
+  const consultoraLinks = [
+    { href: "/consultora#propuesta", label: "Propuesta" },
+    { href: "/consultora#somos", label: "Somos" },
+    { href: "/consultora#servicios", label: "Soluciones" },
+    { href: "/consultora#industrias", label: "Industrias" },
+    { href: "/consultora#contacto", label: "Contacto" },
+  ];
+  const agenciaLinks = [
+    { href: "/agencia#servicio", label: "Servicio" },
+    { href: "/agencia#planes", label: "Planes" },
+    { href: "/agencia#contacto", label: "Contacto" },
+  ];
   const plataformaLinks = [
 
     { href: "/plataforma#servicio", label: "Servicio" },
@@ -53,9 +64,7 @@ const MobileMenuPanel = ({ onClose }: MobileMenuPanelProps) => {
 
     { href: "/plataforma#capacidades", label: "Capacidades" },
 
-    { href: "/plataforma#precios", label: "Precios" },
-
-    { href: "#blog", label: "Blog", disabled: true },
+    { href: "/plataforma#precios", label: "Precios" }
 
   ];
 
@@ -90,26 +99,8 @@ const MobileMenuPanel = ({ onClose }: MobileMenuPanelProps) => {
 
           {/* Lógica de título actualizada */}
 
-          {isPlataformaActive || isConsultoraActive || isAgenciaActive ? (
-
-            <div style={{ display: 'inline-block' }}>
-
-              <BrandLogo logoSize="text-xl" circleSize="w-3 h-3" />
-
-              <div style={{ marginTop: '-0.25rem', width: '100%', textAlign: 'right' }}>
-
-                <span style={{ display: 'block', color: '#666', fontSize: '0.65rem', fontWeight: 300 }}>
-
-                  {isAgenciaActive ? "Agencia" :
-
-                   isPlataformaActive ? "Ai-Commerce" : "Consultoría"}
-
-                </span>
-
-              </div>
-
-            </div>
-
+          {isPlataformaActive ? (
+            <BrandLogo logoSize="text-xl" circleSize="w-3 h-3" subtitle="plataformas" />
           ) : (
 
             <span className="font-semibold text-lg">Menú</span>
@@ -132,12 +123,7 @@ const MobileMenuPanel = ({ onClose }: MobileMenuPanelProps) => {
 
         <nav className="flex flex-col space-y-4">
 
-
-
           {globalLinks.map((link) => {
-
-            // Lógica de 'isActive' actualizada
-
             const isActive = (pathname === link.href) ||
                            (link.href === "/agencia" && isAgenciaActive) ||
 
@@ -145,93 +131,75 @@ const MobileMenuPanel = ({ onClose }: MobileMenuPanelProps) => {
 
                            (link.href === "/consultora" && isConsultoraActive);
 
-
-
             return (
+              <React.Fragment key={link.href}>
+                <Link
+                  href={link.href}
+                  onClick={link.disabled ? (e) => e.preventDefault() : onClose}
+                  className={`text-lg font-medium ${link.disabled ? 'text-gray-400 cursor-not-allowed' : isActive ? 'text-[#00bcd4]' : 'text-gray-900 hover:text-[#00bcd4]'}`}
+                  aria-disabled={link.disabled}
+                >
+                  {link.label}
+                </Link>
+                
+                {/* Desplegar sub-enlaces de Consultora */}
+                {link.href === "/consultora" && isConsultoraActive && (
+                  <div className="pl-4 flex flex-col space-y-3 mt-2">
+                    {consultoraLinks.map((subLink) => (
+                      <Link key={subLink.href} href={subLink.href} onClick={onClose} className="text-base font-normal text-gray-700 hover:text-[#00bcd4]">
+                        {subLink.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
 
-              <Link
+                {/* Desplegar sub-enlaces de Agencia */}
+                {link.href === "/agencia" && isAgenciaActive && (
+                  <div className="pl-4 flex flex-col space-y-3 mt-2">
+                    {agenciaLinks.map((subLink) => {
+                      if (subLink.label === "Contacto") {
+                        return (
+                          <button key={subLink.href} onClick={() => {
+                            window.dispatchEvent(new CustomEvent('open-agencia-form'));
+                            onClose();
+                          }} className="text-base font-normal text-left text-gray-700 hover:text-[#00bcd4]">
+                            {subLink.label}
+                          </button>
+                        );
+                      }
+                      return <Link key={subLink.href} href={subLink.href} onClick={onClose} className="text-base font-normal text-gray-700 hover:text-[#00bcd4]">{subLink.label}</Link>
+                    })}
+                  </div>
+                )}
 
-                key={link.href}
-
-                href={link.href}
-
-                onClick={link.disabled ? (e) => e.preventDefault() : onClose}
-
-                className={`
-
-                  text-lg font-medium
-
-                  ${link.disabled
-
-                    ? 'text-gray-400 cursor-not-allowed' // Estilo Deshabilitado
-
-                    : isActive
-
-                      ? 'text-[#00bcd4]' // Estilo Activo
-
-                      : 'text-gray-900 hover:text-[#00bcd4]' // Estilo Inactivo
-
-                  }
-
-                `}
-
-                aria-disabled={link.disabled}
-
-              >
-
-                {link.label}
-
-              </Link>
-
+                {/* Desplegar sub-enlaces de Plataforma */}
+                {link.href === "/plataforma" && isPlataformaActive && (
+                  <div className="pl-4 flex flex-col space-y-4 mt-3">
+                    <Link href="/plataforma" onClick={onClose} className="flex items-baseline">
+                      <div className="w-2.5 h-2.5 bg-black rounded-full"></div>
+                      <span className="text-base font-light text-black tracking-tighter">ai<span className="font-bold">commerce</span></span>
+                    </Link>
+                    <div className="flex flex-col space-y-3">
+                      {plataformaLinks.map((subLink) => (
+                        <Link
+                          key={subLink.href}
+                          href={subLink.href}
+                          onClick={subLink.disabled ? (e) => e.preventDefault() : onClose}
+                          className={`text-base font-normal ${subLink.disabled ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700 hover:text-[#00bcd4]'}`}
+                          aria-disabled={subLink.disabled}
+                        >
+                          {subLink.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </React.Fragment>
             );
-
           })}
 
-
-
-          {/* Separador y Enlaces de Plataforma (si aplica) */}
-
-          {isPlataformaActive && (
-
-            <>
-
-              <hr className="my-4 border-gray-200" />
-
-              {plataformaLinks.map((link) => (
-
-                  <Link
-
-                    key={link.href}
-
-                    href={link.href}
-
-                    onClick={link.disabled ? (e) => e.preventDefault() : onClose}
-
-                    className={`
-
-                      text-base font-normal pl-4
-
-                      ${link.disabled ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700 hover:text-[#00bcd4]'}
-
-                    `}
-
-                      aria-disabled={link.disabled}
-
-                  >
-
-                    {link.label}
-
-                  </Link>
-
-              ))}
-
-            </>
-
-          )}
-
-            {/* Botón Login (lógica sin cambios) */}
-
-            {pathname !== '/' && (
+            {/* Botón Login (solo para /plataforma) - CORREGIDO */}
+            {isPlataformaActive && (
 
              <>
 
@@ -243,9 +211,9 @@ const MobileMenuPanel = ({ onClose }: MobileMenuPanelProps) => {
 
                    target="_blank"
 
-                   rel="noopener noreferrer"
+                       rel="noopener noreferrer"                                     
 
-                   className="inline-flex items-center justify-center gap-2 text-lg font-medium text-gray-900 hover:text-[#00bcd4]"
+                   className="inline-flex items-center gap-2 text-lg font-medium text-gray-900 hover:text-[#00bcd4]"
 
                    onClick={onClose}
 
@@ -253,7 +221,7 @@ const MobileMenuPanel = ({ onClose }: MobileMenuPanelProps) => {
 
                    Login
 
-                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 111.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" /></svg>
+                   <ArrowRight className="w-5 h-5" />
 
                  </Link>
 
