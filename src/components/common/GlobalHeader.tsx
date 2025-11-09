@@ -31,7 +31,9 @@ import { usePathname } from 'next/navigation';
 
 
 
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
+
+
 
 import { useHeaderVisibility } from '@/components/common/useHeaderVisibility';
 
