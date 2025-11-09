@@ -40,7 +40,7 @@ const AgenciaSubNav = () => {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [navLinks]);
+  }, []);
 
   return (
     <nav
