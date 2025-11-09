@@ -71,20 +71,6 @@ const isAgenciaPage = pathname.startsWith('/agencia');
 
   const isConsultoraPage = pathname.startsWith('/consultora');
 
-
-
-  const isSectionActive = pathname.startsWith('/plataforma') ||
-
-
-
-            pathname.startsWith('/consultora') ||
-
-
-
-            pathname.startsWith('/agencia');
-
-
-
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
 

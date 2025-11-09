@@ -1,7 +1,6 @@
 // src/components/sections/HowItWorksSection.tsx
 "use client";
 
-import BrandLogo from "@/components/common/BrandLogo";
 import { Plug, Search, CheckSquare, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import React from "react";

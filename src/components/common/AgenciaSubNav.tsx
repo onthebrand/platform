@@ -8,6 +8,11 @@ import { motion } from "framer-motion";
 import BrandLogo from '@/components/common/BrandLogo';
 import { AgenciaPageContext, IAgenciaPageContext } from "@/app/agencia/AgenciaPageContext";
 
+const navLinks = [
+  { id: "servicio", href: "/agencia#servicio", label: "Servicio" },
+  { id: "planes", href: "/agencia#planes", label: "Planes" },
+];
+
 const AgenciaSubNav = () => {
   const isHeaderVisible = useHeaderVisibility();
   const isScrolled = !isHeaderVisible;
@@ -15,11 +20,6 @@ const AgenciaSubNav = () => {
   const agenciaPageContext = useContext<IAgenciaPageContext | null>(AgenciaPageContext);
   const handleOpenForm = () => agenciaPageContext?.handleOpenForm();
   
-  const navLinks = [
-       { id: "servicio", href: "/agencia#servicio", label: "Servicio" },
-    { id: "planes", href: "/agencia#planes", label: "Planes" },
-  ];
-
   useEffect(() => {
     const handleScroll = () => {
       const headerHeight = 64; // GlobalHeader

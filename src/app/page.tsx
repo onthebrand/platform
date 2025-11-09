@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Footer from '@/components/common/Footer';
-import BrandLogo from '@/components/common/BrandLogo';
 import HomeContactForm from '@/components/common/HomeContactForm';
 
 const solutions = [

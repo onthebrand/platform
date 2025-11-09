@@ -11,7 +11,7 @@ import Link from 'next/link';
 
 import { Button } from "@/components/ui/button";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import BrandLogo from '@/components/common/BrandLogo';
 
 import { useHeaderVisibility } from "./useHeaderVisibility";

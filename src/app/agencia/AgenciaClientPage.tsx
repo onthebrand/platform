@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, Zap, Target, LayoutDashboard, Check, Palette } from 'lucide-react';
 import Footer from '@/components/common/Footer';
 import SideForm from '@/components/common/SideForm';

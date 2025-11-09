@@ -178,7 +178,6 @@ export default function ConsultoraPage() {
       offset: ["start end", "end start"]
     });
   
-    const grayscale = useTransform(scrollYProgress, [0.3, 0.5, 0.7], [1, 0, 1]);
     const opacity = useTransform(scrollYProgress, [0.3, 0.5, 0.7], [0.7, 1, 0.7]);
   
     return (
