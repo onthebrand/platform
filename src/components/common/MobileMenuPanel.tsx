@@ -184,9 +184,8 @@ const MobileMenuPanel = ({ onClose }: MobileMenuPanelProps) => {
                         <Link
                           key={subLink.href}
                           href={subLink.href}
-                          onClick={subLink.disabled ? (e) => e.preventDefault() : onClose}
-                          className={`text-base font-normal ${subLink.disabled ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700 hover:text-[#00bcd4]'}`}
-                          aria-disabled={subLink.disabled}
+                          onClick={onClose}
+                          className="text-base font-normal text-gray-700 hover:text-[#00bcd4]"
                         >
                           {subLink.label}
                         </Link>
