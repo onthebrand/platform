@@ -1,6 +1,7 @@
 // src/components/sections/ServiceSection.tsx
 "use client";
-import Reactton } from "@/components/ui/button";
+import React from "react";
+import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
 import AnalysisIcon from "@/components/icons/AnalysisIcon";
 import BrainIcon from "@/components/icons/BrainIcon";
