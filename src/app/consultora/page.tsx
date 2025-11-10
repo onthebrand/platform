@@ -102,7 +102,7 @@ const industries = [
   },
   {
     name: "Educación",
-    logos: [{ src: "/logos/educacion/inacap.svg", alt: "INACAP" }],
+    logos: [{ src: "/logos/educacion/inacap.svg", alt: "INACAP", sizeClass: "h-8" }],
   },
   {
     name: "Salud y Bienestar",
