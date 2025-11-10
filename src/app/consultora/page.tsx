@@ -78,6 +78,54 @@ const services = [
   }
 ];
 
+const industries = [
+  {
+    name: "Banca, Finanzas y Seguros",
+    logos: [
+      { src: "/banca-finanzas-seguros/Bci_Logotype.svg", alt: "Bci", sizeClass: "h-6" },
+      { src: "/banca-finanzas-seguros/Banco_de_Chile_logo.svg", alt: "Banco de Chile", sizeClass: "h-12" },
+      { src: "/banca-finanzas-seguros/1-Transbank_CJ_Color_300_300px.svg", alt: "Transbank", sizeClass: "h-9" },
+      { src: "/banca-finanzas-seguros/1.Onepay_FB_300px.svg", alt: "Onepay", sizeClass: "h-6" },
+      { src: "/banca-finanzas-seguros/1.Webpay_FB_300px.svg", alt: "Webpay", sizeClass: "h-7" },
+      { src: "/banca-finanzas-seguros/Betterfly_Earth_sin_sello_sin_fondo_SVG.svg", alt: "Betterfly", sizeClass: "h-8" },
+      { src: "/banca-finanzas-seguros/BICE_logo.svg", alt: "BICE", sizeClass: "h-12" },
+      { src: "/banca-finanzas-seguros/hdi-logo.svg", alt: "HDI", sizeClass: "h-14" },
+      { src: "/banca-finanzas-seguros/mutual-logo.svg", alt: "Mutual", sizeClass: "h-14" },
+    ],
+  },
+  {
+    name: "Retail y Consumo Masivo",
+    logos: [
+      { src: "/logos/retail/cencosud.svg", alt: "Cencosud", sizeClass: "h-8" },
+      { src: "/logos/retail/ripley.svg", alt: "Ripley", sizeClass: "h-8" },
+    ],
+  },
+  {
+    name: "Educación",
+    logos: [{ src: "/logos/educacion/inacap.svg", alt: "INACAP", sizeClass: "h-8" }],
+  },
+  {
+    name: "Salud y Bienestar",
+    logos: [],
+  },
+  {
+    name: "Inmobiliario y Construcción",
+    logos: [],
+  },
+  {
+    name: "Automotriz",
+    logos: [],
+  },
+  {
+    name: "Tecnología y Telecomunicaciones",
+    logos: [],
+  },
+  {
+    name: "Industria y B2B",
+    logos: [],
+  },
+];
+
 // Icono simple de Check
 const CheckIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
