@@ -78,6 +78,12 @@ const services = [
   }
 ];
 
+interface Logo {
+  src: string;
+  alt: string;
+  sizeClass: string;
+}
+
 const industries = [
   {
     name: "Banca, Finanzas y Seguros",
@@ -88,9 +94,9 @@ const industries = [
       { src: "/banca-finanzas-seguros/1.Onepay_FB_300px.svg", alt: "Onepay", sizeClass: "h-6" },
       { src: "/banca-finanzas-seguros/1.Webpay_FB_300px.svg", alt: "Webpay", sizeClass: "h-7" },
       { src: "/banca-finanzas-seguros/Betterfly_Earth_sin_sello_sin_fondo_SVG.svg", alt: "Betterfly", sizeClass: "h-8" },
-      { src: "/banca-finanzas-seguros/BICE_logo.svg", alt: "BICE", sizeClass: "h-13" },
-      { src: "/banca-finanzas-seguros/hdi-logo.svg", alt: "HDI", sizeClass: "h-16" }, // Agrandado
-      { src: "/banca-finanzas-seguros/mutual-logo.svg", alt: "Mutual", sizeClass: "h-16" }, // Agrandado
+      { src: "/banca-finanzas-seguros/BICE_logo.svg", alt: "BICE", sizeClass: "h-12" },
+      { src: "/banca-finanzas-seguros/hdi-logo.svg", alt: "HDI", sizeClass: "h-14" },
+      { src: "/banca-finanzas-seguros/mutual-logo.svg", alt: "Mutual", sizeClass: "h-14" },
     ],
   },
   {
