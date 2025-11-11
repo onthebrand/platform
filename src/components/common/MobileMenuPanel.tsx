@@ -101,8 +101,11 @@ const MobileMenuPanel = ({ onClose }: MobileMenuPanelProps) => {
 
           {isPlataformaActive ? (
             <BrandLogo logoSize="text-xl" circleSize="w-3 h-3" subtitle="plataformas" />
+          ) : isAgenciaActive ? (
+            <BrandLogo logoSize="text-xl" circleSize="w-3 h-3" subtitle="agencia" />
+          ) : isConsultoraActive ? (
+            <BrandLogo logoSize="text-xl" circleSize="w-3 h-3" subtitle="consultores" />
           ) : (
-
             <span className="font-semibold text-lg">Menú</span>
 
           )}

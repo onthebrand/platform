@@ -37,9 +37,9 @@ const HeroSection = () => {
           animate="visible"
         >
           <motion.div variants={itemVariants} className="flex flex-col items-center">
-            <h1 className="text-4xl lg:text-5xl font-bold tracking-tighter leading-tight mb-6">
+            <h1 className="text-4xl lg:text-5xl font-bold tracking-tighter leading-tight mb-6 text-white">
               Conecta tu Ecommerce a un cerebro de <br /> 
-              <span className="text-white">Inteligencia Artificial</span>
+              <span className="text-[#00bcd4]">Inteligencia Artificial</span>
             </h1>
             <p className="text-base text-gray-200 max-w-lg mx-auto mb-8">
               Gestionamos tus campañas de Marketing Digital con los datos de tu negocio, combinando estrategia humana y la precisión de la IA en un servicio on-demand.

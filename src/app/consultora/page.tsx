@@ -172,6 +172,7 @@ export default function ConsultoraPage() {
   ];
 
   const ConsultorCard = ({ consultor }: { consultor: typeof consultores[0] }) => {
+    const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
       target: ref,
@@ -183,17 +184,18 @@ export default function ConsultoraPage() {
     return (
       <motion.div
         ref={ref}
-        className="text-center group"
+        className="text-center group cursor-pointer"
         variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
         transition={{ duration: 0.5 }}
         style={isDesktop ? {} : { opacity }}
+        onClick={() => !isDesktop && setIsOpen(!isOpen)}
       >
         <div className="relative w-40 h-40 mx-auto mb-4 rounded-full overflow-hidden">
           <Image src={consultor.img} alt={`Foto de ${consultor.name}`} fill className={`object-cover transition-all duration-500 ${isDesktop ? 'grayscale group-hover:grayscale-0' : ''}`} />
         </div>
         <h3 className="font-bold text-lg text-gray-900">{consultor.name}</h3>
         <p className="text-sm text-cyan-600 font-medium">{consultor.title}</p>
-        <p className="text-sm text-gray-600 mt-2 max-h-0 opacity-0 transition-all duration-500 ease-in-out group-hover:max-h-screen group-hover:opacity-100">{consultor.bio}</p>
+        <p className={`text-sm text-gray-600 mt-2 transition-all duration-500 ease-in-out ${isDesktop ? 'max-h-0 opacity-0 group-hover:max-h-screen group-hover:opacity-100' : (isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0')}`}>{consultor.bio}</p>
       </motion.div>
     );
   };
