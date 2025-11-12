@@ -220,8 +220,14 @@ export default function AgenciaClientPage({ children }: { children: React.ReactN
                   <ul className="space-y-3 mb-8">
                     {plan.features.map((feature) => (
                       <li key={feature} className="flex items-start">
-                        <Check className="w-4 h-4 text-cyan-500 mr-3 mt-1 flex-shrink-0" />
-                        <span className="text-sm text-gray-700 text-left">{feature}</span>
+                        <div className="w-4 h-4 bg-cyan-500 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                          <Check className="w-3 h-3 text-white" strokeWidth={3} />
+                        </div>
+                        <span className={`text-sm text-gray-700 text-left ${
+                          feature === "Gráficas y Videos con IA" ? "font-bold text-purple-600" : ""
+                        }`}>
+                          {feature}
+                        </span>
                       </li>
                     ))}
                   </ul>
