@@ -28,8 +28,13 @@ export const metadata = {
     type: 'website',
   },
   icons: {
-    icon: '/favicon.svg',
+    icon: [
+      { rel: 'icon', url: '/favicon.ico', sizes: 'any' },
+      { rel: 'icon', type: 'image/svg+xml', url: '/favicon.svg' },
+    ],
+    apple: '/apple-touch-icon.png',
   },
+  manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({
