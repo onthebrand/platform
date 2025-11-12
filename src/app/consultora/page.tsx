@@ -96,13 +96,39 @@ const industries = [
   {
     name: "Retail y Consumo Masivo",
     logos: [
-      { src: "/logos/retail/cencosud.svg", alt: "Cencosud", sizeClass: "h-8" },
-      { src: "/logos/retail/ripley.svg", alt: "Ripley", sizeClass: "h-8" },
+      { src: "/retail-y-consumo-masivo/adidas.svg", alt: "Adidas", sizeClass: "h-12" },
+      { src: "/retail-y-consumo-masivo/walmart.svg", alt: "Walmart", sizeClass: "h-14" },
+      { src: "/retail-y-consumo-masivo/burger.svg", alt: "Burger King", sizeClass: "h-12" },
+      { src: "/retail-y-consumo-masivo/vans.svg", alt: "Vans", sizeClass: "h-12" },
+      { src: "/retail-y-consumo-masivo/sodimac.svg", alt: "Sodimac", sizeClass: "h-14" },
+      { src: "/retail-y-consumo-masivo/cruz.svg", alt: "Cruz Verde", sizeClass: "h-14" },
+      { src: "/retail-y-consumo-masivo/elite.svg", alt: "Elite", sizeClass: "h-12" },
+      { src: "/retail-y-consumo-masivo/lapiz.svg", alt: "Lápiz López", sizeClass: "h-12" },
+      { src: "/retail-y-consumo-masivo/master.svg", alt: "Mastercat", sizeClass: "h-12" },
+      { src: "/retail-y-consumo-masivo/mts.svg", alt: "MTS", sizeClass: "h-12" },
+      { src: "/retail-y-consumo-masivo/pepe.svg", alt: "Pepe Jeans", sizeClass: "h-13" },
+      { src: "/retail-y-consumo-masivo/tottus.svg", alt: "Tottus", sizeClass: "h-13" },
+    ],
+  },
+  {
+    name: "Alimentos y bebidas",
+    logos: [
+      { src: "/alimentos-y-bebidas/redbull-logo.svg", alt: "Red Bull", sizeClass: "h-15" },
+      { src: "/alimentos-y-bebidas/nescafe-logo.svg", alt: "Nescafé", sizeClass: "h-6" },
+      { src: "/alimentos-y-bebidas/pepsi-logo.svg", alt: "Pepsi", sizeClass: "h-15" },
+      { src: "/alimentos-y-bebidas/agrosuper-logo.svg", alt: "Agrosuper", sizeClass: "h-14" },
+      { src: "/alimentos-y-bebidas/colun-logo.svg", alt: "Colun", sizeClass: "h-12" },
+      { src: "/alimentos-y-bebidas/bilz-y-pap-logo.svg", alt: "Bilz y Pap", sizeClass: "h-15" },
+      { src: "/alimentos-y-bebidas/loncoleche-logo.svg", alt: "Loncoleche", sizeClass: "h-15" },
+      { src: "/alimentos-y-bebidas/calo-logo.svg", alt: "Calo", sizeClass: "h-15" },
+      { src: "/alimentos-y-bebidas/cafe-caribe-logo.svg", alt: "Café Caribe", sizeClass: "h-15" },
+      { src: "/alimentos-y-bebidas/oikos-logo.svg", alt: "Oikos", sizeClass: "h-15" },
+      { src: "/alimentos-y-bebidas/qualy-logo.svg", alt: "Qualy", sizeClass: "h-15" },
     ],
   },
   {
     name: "Educación",
-    logos: [{ src: "/logos/educacion/inacap.svg", alt: "INACAP", sizeClass: "h-8" }],
+    logos: [],
   },
   {
     name: "Salud y Bienestar",
@@ -113,8 +139,20 @@ const industries = [
     logos: [],
   },
   {
-    name: "Automotriz",
-    logos: [],
+    name: "Automotriz y Transporte",
+    logos: [
+      { src: "/automotriz-y-transporte/bmw.svg", alt: "BMW", sizeClass: "h-12" },
+      { src: "/automotriz-y-transporte/mitsubishi.svg", alt: "Mitsubishi", sizeClass: "h-12" },
+      { src: "/automotriz-y-transporte/nissan.svg", alt: "Nissan", sizeClass: "h-12" },
+      { src: "/automotriz-y-transporte/lexus.svg", alt: "Lexus", sizeClass: "h-12" },
+      { src: "/automotriz-y-transporte/lambo.svg", alt: "Lamborghini", sizeClass: "h-12" },
+      { src: "/automotriz-y-transporte/mg.svg", alt: "MG", sizeClass: "h-12" },
+      { src: "/automotriz-y-transporte/ubereats.svg", alt: "Uber Eats", sizeClass: "h-12" },
+      { src: "/automotriz-y-transporte/europcar.svg", alt: "Europcar", sizeClass: "h-12" },
+      { src: "/automotriz-y-transporte/sixt.svg", alt: "Sixt", sizeClass: "h-12" },
+      { src: "/automotriz-y-transporte/shell.svg", alt: "Shell", sizeClass: "h-12" },
+      { src: "/automotriz-y-transporte/autopista.svg", alt: "Autopista Central", sizeClass: "h-15" },
+    ],
   },
   {
     name: "Tecnología y Telecomunicaciones",
@@ -206,6 +244,48 @@ export default function ConsultoraPage() {
 
   return (
     <main className="bg-white">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "Consultoría de Marketing Estratégico",
+            "provider": {
+              "@type": "Organization",
+              "name": "Onthebrand"
+            },
+            "areaServed": {
+              "@type": "Country",
+              "name": "CL"
+            },
+            "description": "Asesoramiento objetivo y especializado para la alta dirección. Definimos la estrategia de crecimiento y entregamos una hoja de ruta para que los equipos internos y agencias la ejecuten.",
+            "name": "Consultoría de Marketing como Estrategia de Negocio"
+          }) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [{
+              "@type": "Question",
+              "name": "¿Qué diferencia a Onthebrand de una agencia de marketing tradicional?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Nuestra propuesta de valor se centra en la estrategia y la inteligencia de marketing, no en la ejecución masiva. Actuamos como asesores objetivos para la alta dirección, sin los sesgos que puede tener una agencia que también ejecuta las campañas."
+              }
+            },{
+              "@type": "Question",
+              "name": "¿Con qué tipo de industrias trabajan?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Tenemos amplia experiencia en múltiples industrias, incluyendo Banca, Finanzas y Seguros, Retail y Consumo Masivo, Alimentos y Bebidas, Automotriz y Transporte, entre otras. Nuestro enfoque estratégico es adaptable a los desafíos de cada sector."
+              }
+            }]
+          }) }}
+        />
+      </head>
 
       {/* --- Sección Hero --- */}
       <section className="relative -mt-28 pt-28 border-b border-gray-200 overflow-hidden">
@@ -481,7 +561,7 @@ export default function ConsultoraPage() {
                 ))
               ) : (
                 <p className="text-gray-500">
-                  Próximamente agregaremos los logos de nuestros clientes en esta industria.
+                  Próximamente agregaremos las marcas en esta industria.
                 </p>
               )}
             </motion.div>
