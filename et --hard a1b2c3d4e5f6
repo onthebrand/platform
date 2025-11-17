@@ -1,0 +1,170 @@
+[33mcommit 85f109c685b871f79199f040424544f0dc10db8e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Wed Nov 12 15:57:00 2025 -0300
+
+    feat(agencia): Mejora visual en la sección de planes
+    
+    Se actualiza el estilo de los íconos de características en los planes para darles mayor prominencia. Además, se destaca visualmente la característica 'Gráficas y Videos con IA' para resaltar su valor en los planes Smart y Pro.
+
+[33mcommit 8a292ac5ca5dfed8ba1a2a5790c5a122aff71773[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Wed Nov 12 15:35:57 2025 -0300
+
+    feat(agencia): Actualiza planes y precios
+    
+    Se modifican los precios, descripciones y características de los planes en la página de agencia según los nuevos requerimientos. Adicionalmente, se corrige la ubicación del archivo site.webmanifest para solucionar el problema del favicon.
+
+[33mcommit a0d08a4ec67c3d16baa56e54a10f811421767ae2[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Wed Nov 12 13:41:27 2025 -0300
+
+    fix(favicon): Añade webmanifest y assets para corregir error 404
+    
+    Se agrega el archivo site.webmanifest y los íconos correspondientes para Android en el directorio /public. Esto soluciona el error 404 que impedía la correcta visualización del favicon y mejora la compatibilidad con PWA.
+
+[33mcommit 22f1645a1ab5680358d5e28e48421e7b6b446811[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Wed Nov 12 13:23:16 2025 -0300
+
+    feat: Implementa configuración completa de favicon
+    
+    Se actualiza el objeto 'metadata' en layout.tsx para incluir una configuración de íconos más robusta, compatible con diversos navegadores y dispositivos (SVG, ICO, Apple Touch Icon). Se añade también el manifiesto web para mejorar la experiencia PWA y se suben los archivos correspondientes a /public.
+
+[33mcommit 44981edadd7911682990f8ae6d31e2476e667a20[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Wed Nov 12 12:02:09 2025 -0300
+
+    feat(core): Implementa optimizaciones SEO/GEO y actualiza contenido
+    
+    - **SEO & GEO:**
+      - Se implementan optimizaciones para SEO y GEO (Generative Engine Optimization).
+      - Se añade 'sitemap.ts' para la generación automática del mapa del sitio y 'robots.txt' para guiar a los motores de búsqueda.
+      - Se enriquece la metadata global ('layout.tsx') con títulos, descripciones y palabras clave optimizadas.
+      - Se incorporan datos estructurados (Schema.org) para 'Organization', 'Service' y 'FAQPage' para mejorar la visibilidad ante IAs.
+      - Se configura el 'favicon.svg' para el sitio.
+    
+    - **Consultora:**
+      - Se añaden logos de clientes para las industrias 'Alimentos y bebidas', 'Retail y Consumo Masivo' y 'Automotriz y Transporte'.
+      - Se ajusta el tamaño de los logos para una mejor consistencia visual.
+      - Se mejora la interactividad de la sección 'Somos' en móvil, mostrando biografías al hacer clic.
+      - Se corrige la alineación del carrusel de industrias en la vista móvil.
+    
+    - **Agencia:**
+      - Se actualizan los precios a CLP y se añade el detalle de los 'setup fees' a cada plan.
+      - Se añaden los sub-enlaces de la sección al menú móvil.
+    
+    - **Plataforma:**
+      - Se ajustan los colores del título en la sección 'Hero'.
+      - Se mejora el efecto 'hover' de los botones para una mayor interactividad.
+      - Se corrige el diseño del menú móvil.
+    
+    - **General:**
+      - Se corrigen múltiples errores de linting y tipos (variables e importaciones sin uso) para asegurar el despliegue exitoso en Vercel.
+
+[33mcommit 143e8b043c54b250901b12f0aa4c8db0a4a4d8a5[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Wed Nov 12 11:51:17 2025 -0300
+
+    feat(core): Implementa optimizaciones SEO/GEO y actualiza contenido
+    
+    - **SEO & GEO:**
+      - Se implementan optimizaciones para SEO y GEO (Generative Engine Optimization).
+      - Se añade 'sitemap.ts' para la generación automática del mapa del sitio.
+      - Se crea 'robots.txt' para guiar a los motores de búsqueda.
+      - Se enriquece la metadata global ('layout.tsx') con títulos, descripciones y palabras clave optimizadas.
+      - Se incorporan datos estructurados (Schema.org) para 'Organization', 'Service' y 'FAQPage' para mejorar la visibilidad ante IAs.
+      - Se configura el 'favicon.svg' para el sitio.
+    
+    - **Consultora:**
+      - Se añaden las categorías de industria 'Alimentos y bebidas' y 'Automotriz y Transporte' con sus respectivos logos.
+      - Se ajusta el tamaño de los logos para una mejor consistencia visual.
+      - Se mejora la interactividad de la sección 'Somos' en móvil, mostrando biografías al hacer clic.
+    
+    - **Plataforma:**
+      - Se ajustan los colores del título en la sección 'Hero'.
+
+[33mcommit fb69326c0bcce1edd558210ada59f15168122dcd[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Tue Nov 11 11:36:35 2025 -0300
+
+    prueba menu logo
+
+[33mcommit 9eee634de6276f94e7431e779618edbd6f23a2d5[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Mon Nov 10 15:30:31 2025 -0300
+
+    fix(build): Elimina la declaración duplicada de 'industries'
+
+[33mcommit d1b0683bf9cd9dd760c87f02d0671b0987f4a8da[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Mon Nov 10 15:26:52 2025 -0300
+
+    fix(build): Redefine el array 'industries' que faltaba
+
+[33mcommit 098d37862340c87d47d8afe3936dab166dadb850[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Mon Nov 10 12:10:58 2025 -0300
+
+    fix(build): Redefine el array 'industries' que faltaba
+
+[33mcommit 080900dc7de687b5f49c4986ec95b2bb83098925[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Mon Nov 10 11:49:40 2025 -0300
+
+    fix(build): Corrige error de sintaxis en la importación de ServiceSection
+
+[33mcommit c08a03b95ac6dae1fad04d2b5646a7398d8403d9[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Mon Nov 10 11:37:54 2025 -0300
+
+    fix(build): Limpieza final de código para despliegue en Vercel
+
+[33mcommit 8a4e123e57e34babe63a5e23c45591831b598f03[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Mon Nov 10 11:22:05 2025 -0300
+
+    fix(build): Corrige errores de linting y tipos para el despliegue
+    
+    - Elimina importaciones y variables sin uso en múltiples componentes ('GlobalHeader', 'AgenciaClientPage', 'ConsultoraSubNav', etc.) para cumplir con las reglas de ESLint.
+    - Soluciona un error de tipo en 'consultora/page.tsx' asegurando que todos los objetos de logo tengan la propiedad 'sizeClass'.
+    - Corrige un error de tipo en 'MobileMenuPanel.tsx' eliminando la lógica para la propiedad 'disabled' que ya no se usa.
+    - Elimina archivos de componentes ('ContactButton', 'layout.tsx', 'page.tsx') que ya no eran necesarios para mantener el proyecto limpio.
+
+[33mcommit 941ab5c56ea7b08260a884089dc5b2bc41924000[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Mon Nov 10 11:10:30 2025 -0300
+
+    fix(build): Elimina lógica 'disabled' de sub-enlaces de plataforma
+
+[33mcommit 826134f8e4e4ee3fc4265674182afc07399d3b6c[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Mon Nov 10 09:54:47 2025 -0300
+
+    fix(build): Corrige tipo de datos en logos de industrias
+
+[33mcommit bc6e5feba3edfb13905b6597bc24b147eecfae7b[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Sun Nov 9 15:48:41 2025 -0300
+
+    fix(build): Elimina importaciones sin uso en GlobalHeader
+
+[33mcommit 1d581b6b90ab05780abedd0b587c4657449d787a[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Sun Nov 9 13:39:29 2025 -0300
+
+    Un resumen corto de tus cambios
+
+[33mcommit b8df77cef151bebd0699e1e7ad45f9f260ba3854[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Sun Nov 9 13:28:42 2025 -0300
+
+    Un resumen corto de tus cambios
+
+[33mcommit 3cbd9c9b7463b653b3e0f94ddc24149ab7b7dc1b[m
+Author: Omar Mora Bacho <omar@onthebrand.cl>
+Date:   Sun Nov 9 00:18:24 2025 -0300
+
+    feat(core): Rediseño del Home y mejoras de UX en secciones
+    
+    - **Home:**
+      - Se rediseña completamente la página de inicio para ser una experiencia inmersi

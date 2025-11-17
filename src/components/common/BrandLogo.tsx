@@ -19,29 +19,28 @@ interface BrandLogoProps {
   className?: string;
 
   subtitle?: string;
-
+ isWhite?: boolean;
 }
 
 
 
-const BrandLogo = ({ logoSize = 'text-2xl', circleSize = 'w-4 h-4', className, subtitle }: BrandLogoProps) => {
-
+const BrandLogo = ({ logoSize = 'text-2xl', circleSize = 'w-4 h-4', className, subtitle, isWhite = false }: BrandLogoProps) => {
   return (
 
-    <div className={`inline-flex flex-col items-end ${className}`}>
+    <div className={`inline-flex flex-col items-end ${className} ${isWhite ? 'text-white' : ''}`}>
 
       {/* El logo original */}
 
       <div className={`flex items-baseline`}>
 
-          <div className={`bg-[#00bcd4] rounded-full ${circleSize} group-[.text-white]:bg-white`}></div>
-        <span className={`font-light text-[#e91e63] tracking-tighter ${logoSize} group-[.text-white]:text-white`}>onthe<span className="font-bold text-[#9c00ff] group-[.text-white]:text-white">brand</span></span>
+      <div className={`bg-[#00bcd4] rounded-full ${circleSize} ${isWhite ? 'bg-white' : ''}`}></div>
+        <span className={`font-light tracking-tighter ${logoSize} ${isWhite ? 'text-white' : 'text-[#e91e63]'}`}>onthe<span className={`font-bold ${isWhite ? 'text-white' : 'text-[#9c00ff]'}`}>brand</span></span>
 
       </div>
 
       {subtitle && (
 
-                <span className="text-gray-700 text-xs font-light leading-tight -mt-1.5">
+                <span className={`text-xs font-light leading-tight -mt-1.5 ${isWhite ? 'text-white/80' : 'text-gray-700'}`}>
 
           {subtitle}
 

@@ -6,20 +6,18 @@ import { Button } from "@/components/ui/button";
 import { useHeaderVisibility } from "@/components/common/useHeaderVisibility";
 import { motion } from "framer-motion";
 import BrandLogo from '@/components/common/BrandLogo';
-import { AgenciaPageContext, IAgenciaPageContext } from "@/app/agencia/AgenciaPageContext";
 
 const navLinks = [
-  { id: "servicio", href: "/agencia#servicio", label: "Servicio" },
-  { id: "planes", href: "/agencia#planes", label: "Planes" },
+  { id: "somos", href: "/agencia#somos", label: "Somos" },
+  { id: "porque-onthebrand", href: "/agencia#porque-onthebrand", label: "Por qué nosotros" },
+  { id: "que-hacemos", href: "/agencia#que-hacemos", label: "Qué hacemos" },
+  { id: "proceso", href: "/agencia#proceso", label: "Cómo lo hacemos" },
 ];
 
 const AgenciaSubNav = () => {
   const isHeaderVisible = useHeaderVisibility();
   const isScrolled = !isHeaderVisible;
   const [activeSection, setActiveSection] = useState('');
-  const agenciaPageContext = useContext<IAgenciaPageContext | null>(AgenciaPageContext);
-  const handleOpenForm = () => agenciaPageContext?.handleOpenForm();
-  
   useEffect(() => {
     const handleScroll = () => {
       const headerHeight = 64; // GlobalHeader
@@ -50,11 +48,11 @@ const AgenciaSubNav = () => {
                 <div className="flex items-center justify-start flex-grow">
           <motion.div
             className="flex-shrink-0 overflow-hidden"
-            animate={{ opacity: isScrolled ? 1 : 0, width: isScrolled ? 110 : 0 }}
+            animate={{ opacity: isScrolled ? 1 : 0, width: isScrolled ? 150 : 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
             <Link href="/agencia" aria-label="Volver al inicio de Agencia">
-              <BrandLogo logoSize="text-lg" circleSize="w-2.5 h-2.5" subtitle="agencia" />
+              <BrandLogo logoSize="text-xl" circleSize="w-3 h-3" subtitle="agencia" />
             </Link>
           </motion.div>
           <motion.div
@@ -75,9 +73,11 @@ const AgenciaSubNav = () => {
         </div>
 
         <div className="hidden md:block">
-          <Button onClick={handleOpenForm} className="rounded-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold transition-colors">
-            Quiero vender más
-          </Button>
+          <Link href="/agencia?contact=true" passHref>
+            <Button className="rounded-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold transition-colors px-6">
+              Quiero mi diagnóstico
+            </Button>
+          </Link>
         </div>
       </div>
     </nav>

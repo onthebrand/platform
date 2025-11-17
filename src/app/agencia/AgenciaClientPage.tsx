@@ -12,11 +12,11 @@ import { useHeaderVisibility } from '@/components/common/useHeaderVisibility';
 const plans = [
   {
     name: "Plan Start",
-    price: "$150.000",
+    price: "$160.000",
     setupFee: "Adminsitración de hasta $250.000 CLP mensuales en inversión publicitaria.",
     description: "Ideal para comenzar a generar tracción.",
     features: [
-      "Campañas Google Search (Red de búsqueda)",
+      "Campañas Google Search (Red de Búsqueda)",
       "Marcación GTM, GA4 y Ads",
       "Dashboard de resultados",
       "Optimización semanal",
@@ -26,7 +26,7 @@ const plans = [
   },
   {
     name: "Plan Smart",
-    price: "$260.000",
+    price: "$290.000",
     setupFee: "Adminsitración de hasta $500.000 CLP mensuales en inversión publicitaria.",
     description: "Perfecto para escalar tus ventas.",
     features: [
@@ -109,7 +109,7 @@ export default function AgenciaClientPage({ children }: { children: React.ReactN
               Más ventas, más simple.
             </motion.h1>
             <motion.p
-              className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8"
+              className="text-lg md:text-xl text-white max-w-3xl mx-auto mb-8"
             >
               Planes a la medida, resultados reales. Conecta tu negocio y empieza a vender más.
             </motion.p>
@@ -215,7 +215,9 @@ export default function AgenciaClientPage({ children }: { children: React.ReactN
                       <span className="text-4xl font-bold">{plan.price}</span>
                       {plan.price.startsWith('$') && <span className="text-gray-500"> CLP/mes + IVA</span>}
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">{plan.setupFee}</p>
+                    <div className="bg-gray-200 text-gray-700 text-xs p-2 rounded-md mt-2 -mx-2">
+                      <p>{plan.setupFee}</p>
+                    </div>
                   </div>
                   <ul className="space-y-3 mb-8">
                     {plan.features.map((feature) => (

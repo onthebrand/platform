@@ -27,21 +27,10 @@ export const metadata = {
     locale: 'es_CL',
     type: 'website',
   },
-  icons: {
-    icon: [
-      { rel: 'icon', url: '/favicon.ico', sizes: 'any' },
-      { rel: 'icon', type: 'image/svg+xml', url: '/favicon.svg' },
-    ],
-    apple: '/apple-touch-icon.png',
-  },
   manifest: '/site.webmanifest',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className={poppins.className}>
       <head>
@@ -77,7 +66,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <GlobalHeader />
+        <GlobalHeader navLinks={[{ name: 'Somos', href: '/agencia#somos' }, { name: 'Servicio', href: '/agencia#servicio' }, { name: 'Partners', href: '/agencia#partners' }]}/>
         {children}
       </body>
     </html>
