@@ -259,7 +259,7 @@ export default function ConsultoraClientPage() {
           src="/video-hero.mp4"
         />
         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-10"></div>
-        <div className="relative container mx-auto px-4 py-24 md:py-32 text-left z-20">
+        <div className="relative container mx-auto px-4 py-48 md:py-60 text-left z-20">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

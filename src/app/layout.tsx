@@ -66,7 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <GlobalHeader navLinks={[{ name: 'Somos', href: '/agencia#somos' }, { name: 'Servicio', href: '/agencia#servicio' }, { name: 'Partners', href: '/agencia#partners' }]}/>
+        <GlobalHeader navLinks={[{ name: 'Consultora', href: '/consultora' }, { name: 'Agencia', href: '/agencia' }, { name: 'Plataforma', href: '/plataforma' }]}/>
         {children}
       </body>
     </html>

@@ -160,9 +160,8 @@ export default function AgenciaPage() {
             className="absolute top-0 left-0 w-full h-full object-cover z-0"
             src="/video-hero.mp4"
           />
-          {/* Capa de color para teñir el video */}
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-fuchsia-600 to-purple-700 opacity-75 z-10"></div>
-          <div className="relative container mx-auto px-4 py-24 md:py-32 text-left z-20">
+          <div className="relative container mx-auto px-4 py-48 md:py-60 text-center z-20">
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -175,11 +174,11 @@ export default function AgenciaPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-lg md:text-xl text-gray-200 max-w-3xl mb-8"
+              className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-8"
             >
               Basta de buscar likes. Encontremos más clientes.<br/>Datos, estrategia y experiencia para mover la última línea.
             </motion.p>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="flex items-center justify-start gap-x-6 mt-10">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="flex flex-col items-center justify-center gap-y-4 mt-10">
               <Link href="#precios" passHref>
                 <Button className="rounded-lg bg-[#ffeb3b] hover:bg-yellow-300 text-black font-bold transition-colors px-8 py-6 text-lg">
                   Quiero vender más y mejor.
