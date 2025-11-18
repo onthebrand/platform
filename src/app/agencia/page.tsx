@@ -9,6 +9,7 @@ import AgenciaClientLayout from './AgenciaClientLayout';
 import AgenciaHeader from './AgenciaHeader';
 import TeamMemberCard from '@/components/TeamMemberCard';
 import { Button } from '@/components/ui/button';
+import DiagnosisCalculator from '@/components/DiagnosisCalculator';
 import BrandLogo from '@/components/common/BrandLogo';
 
 const teamMembers = [
@@ -21,7 +22,7 @@ const teamMembers = [
   {
     name: "Sebastian Solar",
     role: "Director de Estrategia",
-    bio: "Sebastián, con +15 años de experiencia en consultoras y liderando marcas líderes B2B y B2C combina data + creatividad + tecnología para generar estrategias con impacto centrado en las personas.",
+    bio: "Sebastián, con +18 años de experiencia en consultoras y liderando marcas líderes B2B y B2C combina data + creatividad + tecnología para generar estrategias con impacto centrado en las personas.",
     imageUrl: "/sebastian-solar.png"
   }
 ];
@@ -29,27 +30,31 @@ const teamMembers = [
 const processSteps = [ // This was named services before, renaming for clarity
   {
     id: "diagnostico",
-    title: "Escuchamos tu negocio",
+    title: "Estudiamos tu negocio",
     description: "Sí, te vamos a pedir datos y accesos.",
-    icon: <Users className="w-6 h-6" />
+    icon: <Users className="w-6 h-6" />,
+    color: "text-cyan-400",
   },
   {
     id: "estrategia",
     title: "Diseñamos tu estrategia",
     description: "Foco en el impacto, no en slides.",
-    icon: <Compass className="w-6 h-6" />
+    icon: <Compass className="w-6 h-6" />,
+    color: "text-purple-400",
   },
   {
     id: "implementacion",
     title: "Ejecutamos rápido",
-    description: "Sin burocracia, sin reuniones infinitas.",
-    icon: <Rocket className="w-6 h-6" />
+    description: "Sin burocracia, sin reuniones infinitas. (Gracias IA.)",
+    icon: <Rocket className="w-6 h-6" />,
+    color: "text-[#e91e63]",
   },
   {
     id: "medicion",
     title: "Medimos lo que importa",
     description: "ROI, crecimiento, conversiones. No vanity metrics.",
-    icon: <BarChart className="w-6 h-6" />
+    icon: <BarChart className="w-6 h-6" />,
+    color: "text-yellow-400",
   }
 ];
 
@@ -59,12 +64,14 @@ const detailedServices = [
     title: "Diagnóstico",
     subtitle: "El Punto de Partida",
     icon: <Search className="w-6 h-6" />,
-    description: "Realizamos una radiografía completa de tu ecosistema digital. Analizamos tu web, SEO, SEM, redes sociales y competencia para identificar fricciones y oportunidades basándonos en datos, no en intuiciones.",
+    description: "Realizamos una radiografía completa de tu ecosistema digital. Analizamos tu web, redes sociales, posicionamiento en buscadores, plataformas de medición, tu competencia y el mercado para identificar oportunidades basándonos en datos, no en intuiciones.",
     includes: [
-      "Auditoría de Activos Digitales (Web, UX/UI)",
+      "Auditoría Técnica de Activos Digitales",
       "Análisis Competitivo (Benchmarking)",
+      "Análisis de Mercado",
       "Evaluación de Canales (Social, Email, Ads)",
-      "Auditoría SEO técnica y de posicionamiento",
+      "Auditoría SEO Técnica",
+      "Análisis de Contenidos y Anuncios"
     ],
     result: "Un informe accionable que explica el 'qué' y el 'porqué' de tu estado actual, sentando las bases para una estrategia sólida."
   },
@@ -73,7 +80,7 @@ const detailedServices = [
     title: "Estrategia",
     subtitle: "La Hoja de Ruta",
     icon: <Compass className="w-6 h-6" />,
-    description: "Con el diagnóstico en mano, diseñamos tu hoja de ruta hacia el éxito. Definimos objetivos, audiencias, mensajes y los canales más eficientes para tu negocio. No se trata de estar en todos lados, sino en los lugares correctos.",
+    description: "Con el diagnóstico en mano, diseñamos tu hoja de ruta priorizada hacia el éxito. Definimos objetivos, audiencias, mensajes clave y los canales más eficientes para tu negocio. No se trata de estar en todos lados, sino en los lugares correctos.",
     includes: [
       "Definición de Objetivos y KPIs",
       "Segmentación de Audiencia y Buyer Personas",
@@ -85,16 +92,16 @@ const detailedServices = [
   {
     id: "implementacion",
     title: "Implementación",
-    subtitle: "Ejecución con expertise",
+    subtitle: "El liderazgo en la ejecución",
     icon: <Rocket className="w-6 h-6" />,
-    description: "Actuamos como directores de orquesta, gestionando el proyecto de principio a fin. Derivamos la ejecución a nuestra red de partners especialistas, asegurando un resultado impecable sin que tengas que gestionar múltiples proveedores.",
+    description: "Actuamos como el eje central de tu proyecto, gestionándolo de principio a fin. Coordinamos la ejecución a través de nuestra red de partners especialistas, asegurando un resultado impecable sin que tengas que gestionar múltiples proveedores.",
     includes: [
-      "Gestión Integral de Proyectos (Project Management)",
-      "Activación y optimización de campañas (SEM, Social Ads)",
-      "Supervisión de Partners (Desarrollo, SEO, etc.)",
-      "Reporte de resultados enfocado en ROI",
+      "Gestión Integral de Proyectos (Project Management): Somos tu único punto de contacto, centralizando toda la comunicación y supervisión.",
+      "Activación y Optimización de Campañas: (SEM, Social Ads).",
+      "Supervisión de Partners: (Desarrollo, SEO, etc.).",
+      "Reporte de Resultados: Enfocado en el Retorno de la Inversión (ROI).",
     ],
-    result: "La tranquilidad de saber que tu estrategia es implementada por especialistas, garantizando que la orquesta suene afinada y cumpla los objetivos."
+    result: "El resultado: La tranquilidad de saber que tu estrategia es implementada por especialistas, garantizando que todo el sistema funcione cohesionado y cumpla los objetivos."
   }
 ];
 
@@ -107,7 +114,7 @@ const whatWeDo = [
   {
     title: "Contenido que importa",
     description: "Historias que hacen que la gente se detenga, conecte y elija.",
-    icon: <MessageCircle className="w-8 h-8 text-fuchsia-500" />
+    icon: <MessageCircle className="w-8 h-8 text-[#e91e63]" />
   },
   {
     title: "E-commerce que funciona",
@@ -121,7 +128,7 @@ const whatWeDo = [
   },
   {
     title: "Y lo que tu marca necesite para vender más y mejor.",
-    description: "Gestionaremos lo que sea que mueva la aguja.",
+    description: "",
     icon: <Briefcase className="w-8 h-8 text-gray-500" />
   }
 ];
@@ -176,8 +183,8 @@ export default function AgenciaPage() {
             >
               Basta de buscar likes. Encontremos más clientes.<br/>Datos, estrategia y experiencia para mover la última línea.
             </motion.p>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="flex items-center justify-start gap-6 mt-10">
-              <Link href="/agencia?contact=true" passHref>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="flex items-center justify-start gap-x-6 mt-10">
+              <Link href="#precios" passHref>
                 <Button className="rounded-lg bg-[#ffeb3b] hover:bg-yellow-300 text-black font-bold transition-colors px-8 py-6 text-lg">
                   Quiero vender más y mejor.
                 </Button>
@@ -193,7 +200,7 @@ export default function AgenciaPage() {
         {/* Sección Somos */}
         <section id="somos" className="py-16 px-4 bg-white">
           <div className="container mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-12">Quiénes Somos</h2>
+            <h2 className="text-3xl font-bold mb-12">Quiénes somos</h2>
             <motion.div
               className="flex flex-wrap justify-center gap-12"
               variants={containerVariants}
@@ -213,14 +220,14 @@ export default function AgenciaPage() {
           <div className="container mx-auto grid md:grid-cols-2 gap-x-12 gap-y-8 items-center">
             <div className="text-left">
               <h2 className="text-3xl md:text-4xl font-bold">Por qué</h2>
-              <BrandLogo isWhite={true} logoSize="text-5xl" circleSize="w-8 h-8" className="-ml-2"/>
+<BrandLogo isWhite={true} logoSize="text-5xl" circleSize="w-7 h-7" className="-ml-2"/>
             </div>
             <div className="text-lg leading-relaxed space-y-4">
               <p>
                 Porque entendemos que el marketing es estrategia ejecutada con precisión, y una hoja de ruta bien ejecutada sí marca la diferencia.
               </p>
               <p>
-                Somos una extensión de tu negocio, no una agencia tradicional. Contenidos, sí. Creatividad, también. Pero el foco: <span className="font-bold bg-[#ffeb3b] text-black px-2 py-1 rounded-md">en la venta.</span> No en los leads, en la venta.
+                Somos una extensión de tu negocio, no una agencia tradicional. Contenidos, sí. Creatividad, también. Inteligencia Artificial, mucha.  Pero el foco: en la venta. No en los likes, los clics o los leads, <span className="font-bold bg-[#ffeb3b] text-black px-2 py-1 rounded-md">en la venta.</span>
               </p>
             </div>
           </div>
@@ -231,7 +238,7 @@ export default function AgenciaPage() {
           <div className="container mx-auto max-w-6xl">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Qué hacemos</h2>
-              <p className="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">Leemos tu negocio y el mercado, <br/><span className="text-[#9c00ff] font-semibold">y será la estrategia la que nos dirá qué servicios necesitas.</span><br/>No lo que tú crees que necesita, ni lo que el community manager cree que necesita.</p>
+              <p className="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">Hacemos estrategia. Analizamos tu negocio y el mercado,<br/><span className="text-[#9c00ff] font-semibold">y la estrategia nos dirá qué servicios necesita tu marca.</span></p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
               {whatWeDo.map((item, index) => (
@@ -242,10 +249,13 @@ export default function AgenciaPage() {
                 </motion.div>
               ))}
             </div>
-            <div className="text-center mt-12">
-              <Link href="/agencia?contact=true" passHref>
+            <p className="text-center text-gray-700 mt-12 max-w-2xl mx-auto">
+              No lo que el directorio cree que necesita, ni lo que el community manager cree que necesita.
+            </p>
+            <div className="text-center mt-8">
+              <Link href="#precios" passHref>
                 <Button className="rounded-lg bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-bold transition-all duration-300 px-8 py-4 text-base hover:scale-105 hover:shadow-lg">
-                  Eso es lo que necesito
+                  ¡Eso es lo que necesito!
                 </Button>
               </Link>
             </div>
@@ -253,16 +263,18 @@ export default function AgenciaPage() {
         </section>
 
         {/* Sección Proceso */}
-        <section id="proceso" className="py-16 md:py-24 bg-[#1e293b]">
+        <section id="proceso" className="py-16 md:py-24 bg-[#111827] overflow-hidden">
           <div className="container mx-auto max-w-6xl">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-white">Nuestro Proceso, Tu Crecimiento</h2>
-              <p className="text-lg text-gray-300 mt-4">Un método claro y probado. Poco ruido, muchas nueces.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">Cómo lo hacemos</h2>
+              <p className="text-lg text-gray-300 mt-4">
+                Con <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">Inteligencia Artificial</span>. Poco ruido, muchas nueces.
+              </p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {processSteps.map((step) => (
                 <div key={step.id} className="text-center p-6">
-                  <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-fuchsia-100 to-purple-200 text-purple-600">
+                  <div className={`flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-white/10 ${step.color}`}>
                     {step.icon}
                   </div>
                   <h3 className="text-md font-bold text-white">{step.title}</h3>
@@ -277,7 +289,7 @@ export default function AgenciaPage() {
                 {detailedServices.map((service, index) => (
                   <div key={service.id} id={service.id} className={`p-6 rounded-xl cursor-pointer transition-all duration-300 ${activeService === service.id ? 'bg-white shadow-xl' : 'bg-white/70 hover:bg-white'}`} onMouseEnter={() => setActiveService(service.id)}>
                     <div className="flex items-center gap-4">
-                      <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center transition-colors ${activeService === service.id ? 'bg-fuchsia-600 text-white' : 'bg-gray-300 text-gray-600'}`}>
+                      <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center transition-colors ${activeService === service.id ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white' : 'bg-gray-300 text-gray-600'}`}>
                         {service.icon}
                       </div>
                       <div>
@@ -290,7 +302,7 @@ export default function AgenciaPage() {
               </div>
 
               {/* Columna de Contenido */}
-              <div className="relative min-h-[420px]">
+              <div className="relative min-h-[520px]">
                 <AnimatePresence mode="wait">
                   {detailedServices.map(service =>
                     activeService === service.id && (
@@ -312,6 +324,25 @@ export default function AgenciaPage() {
           </div>
         </section>
 
+        {/* Sección Precios */}
+        <section id="precios" className="py-16 md:py-24 bg-[#ffeb3b]">
+          <div className="container mx-auto">
+            <div className="text-center mb-12 max-w-2xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">¿Y cuánto cuesta?</h2>
+              <p className="text-lg text-gray-800 mt-4">Primero, lo primero. Donde no hay diagnóstico, no hay estrategia.</p>
+            </div>
+            <DiagnosisCalculator />
+            <div className="text-center mt-12">
+              <p className="text-gray-700 mb-4">No gracias. Prefiero comenzar con una reunión</p>
+              <Link href="/agencia?contact=true" passHref>
+                <Button className="rounded-lg bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-bold transition-all duration-300 px-8 py-4 text-base hover:scale-105 hover:shadow-lg">
+                  Conversemos
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
       </main>
       {/* --- Footer --- */}
       <footer className="bg-[#e91e63] text-white pt-16 md:pt-24 pb-8">
@@ -322,7 +353,7 @@ export default function AgenciaPage() {
           <h2 className="text-4xl md:text-5xl font-bold">
             Comienza a vender<br/>como siempre lo debiste<br/>haber hecho.
           </h2>
-          <Link href="/agencia?contact=true" passHref>
+          <Link href="#precios" passHref>
             <Button className="mt-8 rounded-lg bg-[#ffeb3b] hover:bg-yellow-300 text-black font-bold transition-colors px-10 py-6 text-xl">
               ¡Vamos!
             </Button>

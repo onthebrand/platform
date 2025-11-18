@@ -8,10 +8,11 @@ import { motion } from "framer-motion";
 import BrandLogo from '@/components/common/BrandLogo';
 
 const navLinks = [
-  { id: "somos", href: "/agencia#somos", label: "Somos" },
+  { id: "somos", href: "/agencia#somos", label: "Quiénes somos" },
   { id: "porque-onthebrand", href: "/agencia#porque-onthebrand", label: "Por qué nosotros" },
   { id: "que-hacemos", href: "/agencia#que-hacemos", label: "Qué hacemos" },
   { id: "proceso", href: "/agencia#proceso", label: "Cómo lo hacemos" },
+  { id: "precios", href: "/agencia#precios", label: "Cuánto cuesta" },
 ];
 
 const AgenciaSubNav = () => {
@@ -73,7 +74,7 @@ const AgenciaSubNav = () => {
         </div>
 
         <div className="hidden md:block">
-          <Link href="/agencia?contact=true" passHref>
+          <Link href="#precios" passHref>
             <Button className="rounded-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold transition-colors px-6">
               Quiero mi diagnóstico
             </Button>

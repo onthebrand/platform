@@ -1,7 +1,6 @@
 // src/components/common/Footer.tsx
 import React from 'react';
 import Link from 'next/link';
-import { Instagram, Youtube } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 
 const Footer = () => {
@@ -13,18 +12,6 @@ const Footer = () => {
           <p className="hidden md:block text-sm text-gray-200">
             © 2025 Onthebrand Inc. All rights reserved.
           </p>
-        </div>
-        <div className="flex items-center gap-x-4">
-          <Link href="#" passHref>
-            <span className="text-white/80 hover:text-white transition-colors cursor-pointer">
-              <Instagram className="w-5 h-5" />
-            </span>
-          </Link>
-          <Link href="#" passHref>
-            <span className="text-white/80 hover:text-white transition-colors cursor-pointer">
-              <Youtube className="w-5 h-5" />
-            </span>
-          </Link>
         </div>
       </div>
       <div className="block md:hidden text-center mt-6 text-sm text-gray-200">
