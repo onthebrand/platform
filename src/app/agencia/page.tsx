@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Footer from '@/components/common/Footer';
@@ -360,7 +360,9 @@ export default function AgenciaPage() {
         </div>
       </footer>
 
-      <AgenciaClientLayout />
+      <Suspense fallback={null}>
+        <AgenciaClientLayout />
+      </Suspense>
     </>
   );
 }
