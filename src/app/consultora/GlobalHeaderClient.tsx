@@ -4,13 +4,11 @@ import { useHeaderVisibility } from "@/components/common/useHeaderVisibility";
 import BrandLogo from "@/components/common/BrandLogo";
 import Link from "next/link";
 import { MainNav } from "@/components/common/MainNav";
-import { usePathname } from "next/navigation";
 
 type NavLink = { name: string; href: string };
 
 export default function GlobalHeaderClient({ navLinks }: { navLinks: NavLink[] }) {
   const isHeaderVisible = useHeaderVisibility();
-  const pathname = usePathname();
   const headerBgClass = 'bg-white'; // Fondo blanco sólido
 
   return (
