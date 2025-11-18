@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -74,19 +74,6 @@ const steps = [
     { id: 'businessModel', label: 'Modelo de negocio' },
 ];
 
-const industries = [
-    "Banca, Finanzas y Seguros",
-    "Retail y Consumo Masivo",
-    "Alimentos y Bebidas",
-    "Educación",
-    "Salud y Bienestar",
-    "Inmobiliario y Construcción",
-    "Automotriz y Transporte",
-    "Tecnología y Telecomunicaciones",
-    "Industria y B2B",
-    "Otro"
-];
-
 export default function DiagnosisCalculator() {
     const [currentStep, setCurrentStep] = useState(0);
     const [formData, setFormData] = useState({
@@ -106,7 +93,6 @@ export default function DiagnosisCalculator() {
     });
     const [showResult, setShowResult] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const inputRef = React.useRef<HTMLInputElement>(null);
 
     const handleNext = () => {
         if (formData.database === 'no' && currentStep === 7) {

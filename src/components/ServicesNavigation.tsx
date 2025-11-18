@@ -1,10 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-const navLinks = [
-  { name: 'Somos', href: '/agencia#quienes-somos' },
-  { name: 'Servicios', href: '/agencia#servicios' },
-  { name: 'Partners', href: '/agencia#partners' },
-];
 import { Zap, Target, LayoutDashboard } from 'lucide-react';
 
 // Define la interfaz para un solo servicio

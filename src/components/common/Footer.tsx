@@ -1,6 +1,5 @@
 // src/components/common/Footer.tsx
 import React from 'react';
-import Link from 'next/link';
 import BrandLogo from './BrandLogo';
 
 const Footer = () => {

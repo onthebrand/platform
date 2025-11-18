@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Footer from '@/components/common/Footer';
-import { ArrowRight, Check, Search, Compass, Rocket, Users, Briefcase, TrendingUp, BarChart, MessageCircle, ShoppingCart, Activity, Target } from 'lucide-react';
+import { ArrowRight, Check, Search, Compass, Rocket, Users, Briefcase, TrendingUp, BarChart, MessageCircle, ShoppingCart, Activity } from 'lucide-react';
 import AgenciaClientLayout from './AgenciaClientLayout';
 import AgenciaHeader from './AgenciaHeader';
 import TeamMemberCard from '@/components/TeamMemberCard';
@@ -131,10 +131,6 @@ const whatWeDo = [
     description: "",
     icon: <Briefcase className="w-8 h-8 text-gray-500" />
   }
-];
-
-const partners = [
-  // Partner data here
 ];
 
 const containerVariants = {
