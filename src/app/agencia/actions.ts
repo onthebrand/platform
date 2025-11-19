@@ -113,17 +113,16 @@ async function sendUserConfirmation(data: DiagnosisFormData) {
 
 export async function submitDiagnosisForm(data: DiagnosisFormData) {
   try {
-    // Disparamos ambos correos en paralelo y no esperamos a que terminen.
-    // Esto da una respuesta inmediata al usuario.
-    sendAdminNotification(data);
-    sendUserConfirmation(data);
+    // Ejecutamos ambos envíos de correo en paralelo y esperamos a que ambos terminen.
+    // Esto es crucial en un entorno serverless para asegurar que la ejecución no se corte.
+    await Promise.all([
+      sendAdminNotification(data),
+      sendUserConfirmation(data)
+    ]);
 
-    // Devolvemos éxito inmediatamente para que la UI pueda reaccionar.
     return { success: true };
 
   } catch (error) {
-    // Este bloque es un seguro, pero es poco probable que se active
-    // ya que los envíos de correo no se esperan (await).
     console.error('Error inesperado en submitDiagnosisForm:', error);
     return { success: false, error: 'Hubo un error al iniciar el proceso de envío.' };
   }
