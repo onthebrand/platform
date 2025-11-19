@@ -34,11 +34,43 @@ const createTransporter = () => {
 async function sendAdminNotification(data: DiagnosisFormData) {
   try {
     const transporter = createTransporter();
+    const formattedPrice = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(data.calculatedPrice);
+
+    const emailHtml = `
+      <div style="font-family: Arial, sans-serif; color: #333;">
+        <h1>Nueva Cotización de Diagnóstico para: ${data.company}</h1>
+        <p>Se ha generado una nueva cotización a través del formulario de la web.</p>
+        <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+          <thead style="background-color: #f2f2f2;">
+            <tr>
+              <th style="text-align: left;">Campo</th>
+              <th style="text-align: left;">Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Nombre</strong></td><td>${data.name}</td></tr>
+            <tr><td><strong>Email</strong></td><td>${data.email}</td></tr>
+            <tr><td><strong>Empresa</strong></td><td>${data.company}</td></tr>
+            <tr><td><strong>Tamaño Empresa</strong></td><td>${data.company_size}</td></tr>
+            <tr><td><strong>Industria</strong></td><td>${data.industry}</td></tr>
+            <tr><td><strong>Sitio Web</strong></td><td>${data.website}</td></tr>
+            <tr><td><strong>Modelo de Negocio</strong></td><td>${data.businessModel}</td></tr>
+            <tr><td><strong>Tiene eCommerce</strong></td><td>${data.ecommerce}</td></tr>
+            <tr><td><strong>Tiene Base de Datos</strong></td><td>${data.database}</td></tr>
+            <tr><td><strong>Tamaño Base de Datos</strong></td><td>${data.database_size || 'N/A'}</td></tr>
+            <tr><td><strong>Competidores</strong></td><td>${data.competitors.filter(c => c).join(', ')}</td></tr>
+            <tr><td><strong>Plataformas</strong></td><td>${data.assets.join(', ')}</td></tr>
+            <tr style="background-color: #e8f5e9;"><td><strong>VALOR CALCULADO</strong></td><td><strong>${formattedPrice} + IVA</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    `;
+
     await transporter.sendMail({
       from: `"Cotizador Onthebrand" <${process.env.SMTP_EMAIL}>`,
       to: 'omar@onthebrand.cl',
       subject: `Nueva Cotización de Diagnóstico: ${data.company}`,
-      html: `<h1>Nueva Cotización de Diagnóstico</h1><pre>${JSON.stringify(data, null, 2)}</pre>`,
+      html: emailHtml,
     });
     console.log('Correo de notificación para admin enviado exitosamente.');
   } catch (error) {
