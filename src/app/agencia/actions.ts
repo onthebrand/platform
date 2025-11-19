@@ -50,7 +50,7 @@ async function sendAdminNotification(data: DiagnosisFormData) {
 
 async function sendUserConfirmation(data: DiagnosisFormData) {
   try {
-    const logoPath = path.resolve(process.cwd(), 'public', 'logo-white.png.png');
+    const logoPath = path.resolve(process.cwd(), 'public', 'logo-white.png');
     const logoBuffer = await fs.readFile(logoPath);
 
     const transporter = createTransporter();
@@ -99,7 +99,7 @@ async function sendUserConfirmation(data: DiagnosisFormData) {
       html: emailHtml,
       attachments: [
         {
-          filename: 'logo-white.png.png',
+          filename: 'logo-white.png',
           content: logoBuffer,
           cid: 'onthebrandlogo' // Este es el Content-ID que usamos en el src de la imagen
         }
