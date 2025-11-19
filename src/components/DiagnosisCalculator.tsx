@@ -430,7 +430,7 @@ export default function DiagnosisCalculator() {
 
                         {/* "Este valor incluye..." box - visible solo antes de que se muestre el resultado */}
                         {!showResult && (
-                            <div className="text-left text-xs text-gray-500 mt-10 border-t pt-6 w-full bg-gray-50 p-4 rounded-lg">
+                            <div className="text-left text-xs text-gray-500 mt-10 border-t pt-6 w-full bg-gray-50 p-4 rounded-lg md:hidden">
                                 <p className="font-semibold mb-2">Este valor incluye:</p>
                                 <ul className="list-disc list-inside space-y-1">
                                     <li>Semáforo de evaluación general y por canal.</li>

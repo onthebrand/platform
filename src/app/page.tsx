@@ -11,13 +11,13 @@ import HomeContactForm from '@/components/common/HomeContactForm';
 const solutions = [
   {
     title: "Consultora",
-    description: "Diagnosticamos tu canal online y generamos una hoja de ruta para tus equipos.",
+    description: "Un equipo senior de marketers enfocados en las necesidades de tu marca.",
     href: "/consultora",
     colors: "from-purple-50 via-white to-white hover:border-purple-200"
   },
   {
     title: "Agencia",
-    description: "El marketing digital en simple. Sin complicaciones, sin sorpresas.",
+    description: "Diagnosticamos tu canal online y generamos una estrategia con foco en venta.",
     href: "/agencia",
     colors: "from-cyan-50 via-white to-white hover:border-cyan-200"
   },

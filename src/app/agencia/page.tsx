@@ -378,10 +378,10 @@ export default function AgenciaPage() {
             <div className="text-center mb-8 max-w-2xl mx-auto px-4">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">¿Y cuánto cuesta?</h2>
               <p className="text-lg text-gray-800 mt-4">Primero, lo primero. Donde no hay diagnóstico, no hay estrategia.</p>
-              <p className="text-gray-700 mt-8">
+              <p className="text-gray-700 mt-8 md:hidden">
                 Completa el formulario para conocer el valor de tu diagnóstico.
               </p>
-              <ArrowRight className="w-5 h-5 mx-auto mt-2 rotate-90 animate-bounce" />
+              <ArrowRight className="w-5 h-5 mx-auto mt-2 rotate-90 animate-bounce md:hidden" />
             </div>
             <DiagnosisCalculator />
             <div className="text-center mt-12">
