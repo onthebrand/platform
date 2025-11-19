@@ -47,7 +47,6 @@ export default function GlobalHeaderClient({
   };
 
   const currentSection = getCurrentSection(pathname);
-  const sectionName = currentSection?.name;
   const subtitle = currentSection?.subtitle;
 
   // Añadimos el enlace "Home" al principio de la lista de navegación
