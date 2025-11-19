@@ -144,7 +144,7 @@ const containerVariants = {
 };
 
 export default function AgenciaPage() {
-  const [activeService, setActiveService] = useState(detailedServices[0].id); // State for the detailed process section
+  const [activeService, setActiveService] = useState<string | null>(detailedServices[0].id); // State for the detailed process section
 
   // State and effect for the animated process steps on mobile
   const [activeProcessStep, setActiveProcessStep] = useState(0);
