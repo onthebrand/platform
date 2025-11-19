@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Footer from '@/components/common/Footer';
@@ -146,6 +146,18 @@ const containerVariants = {
 export default function AgenciaPage() {
   const [activeService, setActiveService] = useState(detailedServices[0].id); // State for the detailed process section
 
+  // State and effect for the animated process steps on mobile
+  const [activeProcessStep, setActiveProcessStep] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveProcessStep((prev) => (prev + 1) % processSteps.length);
+    }, 4000); // Change step every 4 seconds
+
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, []);
+
+
   return (
     <>
       <AgenciaHeader />
@@ -176,7 +188,7 @@ export default function AgenciaPage() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-8"
             >
-              Basta de buscar likes. Encontremos más clientes.<br/>Datos, estrategia y experiencia para mover la última línea.
+              Basta de buscar likes. <br className="md:hidden" />Encontremos más clientes.<br />Datos, estrategia y experiencia para mover la última línea.
             </motion.p>
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="flex flex-col items-center justify-center gap-y-4 mt-10">
               <Link href="#precios" passHref>
@@ -212,17 +224,17 @@ export default function AgenciaPage() {
 
         {/* Sección Por qué Onthebrand */}
         <section id="porque-onthebrand" className="py-16 md:py-24 bg-gradient-to-r from-cyan-600 to-purple-700 text-white">
-          <div className="container mx-auto grid md:grid-cols-2 gap-x-12 gap-y-8 items-center">
-            <div className="text-left">
+          <div className="container mx-auto grid md:grid-cols-2 gap-x-12 gap-y-8 items-center px-4">
+            <div className="text-center md:text-left">
               <h2 className="text-3xl md:text-4xl font-bold">Por qué</h2>
-<BrandLogo isWhite={true} logoSize="text-5xl" circleSize="w-7 h-7" className="-ml-2"/>
+              <BrandLogo isWhite={true} logoSize="text-5xl" circleSize="w-7 h-7" className="md:-ml-2 inline-block"/>
             </div>
-            <div className="text-lg leading-relaxed space-y-4">
+            <div className="text-lg leading-relaxed space-y-4 text-center md:text-left">
               <p>
                 Porque entendemos que el marketing es estrategia ejecutada con precisión, y una hoja de ruta bien ejecutada sí marca la diferencia.
               </p>
               <p>
-                Somos una extensión de tu negocio, no una agencia tradicional. Contenidos, sí. Creatividad, también. Inteligencia Artificial, mucha.  Pero el foco: en la venta. No en los likes, los clics o los leads, <span className="font-bold bg-[#ffeb3b] text-black px-2 py-1 rounded-md">en la venta.</span>
+                Somos una extensión de tu negocio, no una agencia tradicional. Contenidos, sí. Creatividad, también. Inteligencia Artificial, mucha.  Pero el foco: en la venta. No en los likes, los clics o los leads, <span className="font-bold bg-[#ffeb3b] text-black px-2 py-1 rounded-md whitespace-nowrap">en la venta.</span>
               </p>
             </div>
           </div>
@@ -233,18 +245,23 @@ export default function AgenciaPage() {
           <div className="container mx-auto max-w-6xl">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Qué hacemos</h2>
-              <p className="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">Hacemos estrategia. Analizamos tu negocio y el mercado,<br/><span className="text-[#9c00ff] font-semibold">y la estrategia nos dirá qué servicios necesita tu marca.</span></p>
+              <p className="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">Hacemos estrategia.<br className="md:hidden" /> Analizamos tu negocio y el mercado,<br/><span className="text-[#9c00ff] font-semibold">y la estrategia nos dirá qué servicios necesita tu marca.</span></p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6 px-4 md:px-0">
               {whatWeDo.map((item, index) => (
-                <motion.div key={index} className="bg-gray-50 p-8 rounded-xl border border-gray-200 hover:shadow-xl hover:border-purple-300 transition-all duration-300 transform hover:-translate-y-1">
-                  <div className="mb-4">{item.icon}</div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
-                  <p className="text-sm text-gray-600">{item.description}</p>
+                <motion.div key={index} className="bg-gray-50 p-6 md:p-8 rounded-xl border border-gray-200 hover:shadow-xl hover:border-purple-300 transition-all duration-300 transform hover:-translate-y-1">
+                  {/* Contenedor Flex para alinear en móvil */}
+                  <div className="flex flex-row md:flex-col items-center md:items-start gap-4">
+                    <div className="flex-shrink-0 md:mb-4">{item.icon}</div>
+                    <div className="flex-grow">
+                      <h3 className="text-lg font-bold text-gray-900 mb-1 md:mb-2">{item.title}</h3>
+                      <p className="text-sm text-gray-600">{item.description}</p>
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </div>
-            <p className="text-center text-gray-700 mt-12 max-w-2xl mx-auto">
+            <p className="text-center text-gray-700 mt-12 max-w-2xl mx-auto px-4">
               No lo que el directorio cree que necesita, ni lo que el community manager cree que necesita.
             </p>
             <div className="text-center mt-8">
@@ -266,54 +283,90 @@ export default function AgenciaPage() {
                 Con <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">Inteligencia Artificial</span>. Poco ruido, muchas nueces.
               </p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Desktop View: Grid */}
+            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {processSteps.map((step) => (
                 <div key={step.id} className="text-center p-6">
                   <div className={`flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-white/10 ${step.color}`}>
                     {step.icon}
                   </div>
-                  <h3 className="text-md font-bold text-white">{step.title}</h3>
+                  <h3 className="text-lg font-bold text-white">{step.title}</h3>
                   <p className="text-sm text-gray-400 mt-1">{step.description}</p>
                 </div>
               ))}
             </div>
 
-            <div className="grid md:grid-cols-2 gap-10 items-start mt-12">
-              {/* Columna de Acordeón */}
-              <div className="flex flex-col gap-y-4">
-                {detailedServices.map((service, index) => (
-                  <div key={service.id} id={service.id} className={`p-6 rounded-xl cursor-pointer transition-all duration-300 ${activeService === service.id ? 'bg-white shadow-xl' : 'bg-white/70 hover:bg-white'}`} onMouseEnter={() => setActiveService(service.id)}>
-                    <div className="flex items-center gap-4">
-                      <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center transition-colors ${activeService === service.id ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white' : 'bg-gray-300 text-gray-600'}`}>
-                        {service.icon}
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-bold text-gray-900">{`0${index + 1}. ${service.title}`}</h3>
-                        <p className="text-sm text-gray-500">{service.subtitle}</p>
-                      </div>
-                    </div>
+            {/* Mobile View: Animated Carousel */}
+            <div className="md:hidden relative h-48 flex items-center justify-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeProcessStep}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-center p-6 absolute"
+                >
+                  <div className={`flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-white/10 ${processSteps[activeProcessStep].color}`}>
+                    {processSteps[activeProcessStep].icon}
                   </div>
-                ))}
-              </div>
+                  <h3 className="text-lg font-bold text-white">{processSteps[activeProcessStep].title}</h3>
+                  <p className="text-sm text-gray-400 mt-1">{processSteps[activeProcessStep].description}</p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-              {/* Columna de Contenido */}
-              <div className="relative min-h-[520px]">
-                <AnimatePresence mode="wait">
-                  {detailedServices.map(service =>
-                    activeService === service.id && (
-                      <motion.div key={service.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="bg-white p-8 rounded-xl shadow-xl absolute w-full">
-                        <p className="text-gray-700 mb-6">{service.description}</p>
-                        <h4 className="font-bold text-md mb-3 text-gray-800">Qué incluye:</h4>
-                        <ul className="space-y-2 mb-6">
-                          {service.includes.map(item => (
-                            <li key={item} className="flex items-start"><Check className="w-4 h-4 text-green-500 mr-3 flex-shrink-0 mt-1" /><span className="text-gray-600 text-sm">{item}</span></li>
-                          ))}
-                        </ul>
-                        <div className="bg-cyan-500/90 text-white p-4 rounded-lg shadow-inner"><p className="font-semibold text-sm">{service.result}</p></div>
-                      </motion.div>
-                    )
-                  )}
-                </AnimatePresence>
+            {/* --- Nueva Sección de Acordeón --- */}
+            <div className="mt-16 md:mt-24 px-4">
+              <div className="max-w-3xl mx-auto flex flex-col gap-y-4">
+                {detailedServices.map((service, index) => {
+                  const isActive = activeService === service.id;
+                  return (
+                    <div key={service.id} id={service.id} className={`rounded-xl transition-all duration-300 ${isActive ? 'bg-white shadow-xl' : 'bg-white/70 hover:bg-white'}`}>
+                      {/* Cabecera del Acordeón (Clickable) */}
+                      <div 
+                        className="p-6 cursor-pointer" 
+                        onClick={() => setActiveService(isActive ? null : service.id)} // Permite abrir y cerrar
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center transition-colors ${isActive ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white' : 'bg-gray-300 text-gray-600'}`}>
+                            {service.icon}
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-bold text-gray-900">{`0${index + 1}. ${service.title}`}</h3>
+                            <p className="text-sm text-gray-500">{service.subtitle}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Panel de Contenido (Desplegable) */}
+                      <AnimatePresence>
+                        {isActive && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-6 pb-6 pt-2">
+                              <div className="border-t border-gray-200 pt-6">
+                                <p className="text-gray-700 mb-6">{service.description}</p>
+                                <h4 className="font-bold text-md mb-3 text-gray-800">Qué incluye:</h4>
+                                <ul className="space-y-2 mb-6">
+                                  {service.includes.map(item => (
+                                    <li key={item} className="flex items-start"><Check className="w-4 h-4 text-green-500 mr-3 flex-shrink-0 mt-1" /><span className="text-gray-600 text-sm">{item}</span></li>
+                                  ))}
+                                </ul>
+                                <div className="bg-cyan-500/10 text-cyan-800 p-4 rounded-lg"><p className="font-semibold text-sm">{service.result}</p></div>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -321,10 +374,14 @@ export default function AgenciaPage() {
 
         {/* Sección Precios */}
         <section id="precios" className="py-16 md:py-24 bg-[#ffeb3b]">
-          <div className="container mx-auto">
-            <div className="text-center mb-12 max-w-2xl mx-auto">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-8 max-w-2xl mx-auto px-4">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">¿Y cuánto cuesta?</h2>
               <p className="text-lg text-gray-800 mt-4">Primero, lo primero. Donde no hay diagnóstico, no hay estrategia.</p>
+              <p className="text-gray-700 mt-8">
+                Completa el formulario para conocer el valor de tu diagnóstico.
+              </p>
+              <ArrowRight className="w-5 h-5 mx-auto mt-2 rotate-90 animate-bounce" />
             </div>
             <DiagnosisCalculator />
             <div className="text-center mt-12">

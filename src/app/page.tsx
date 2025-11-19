@@ -86,7 +86,7 @@ export default function Home() {
           >
             {solutions.map((solution) => (
               <motion.div key={solution.title} variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1 } }}>
-                <Link href={solution.href} className={`group block p-8 rounded-2xl bg-white/80 backdrop-blur-sm border border-white/20 h-full transition-all duration-300 shadow-sm hover:shadow-lg hover:bg-white`}>
+                <Link href={solution.href} className={`group block p-8 rounded-2xl bg-white md:bg-white/80 backdrop-blur-sm border border-white/20 h-full transition-all duration-300 shadow-sm hover:shadow-lg hover:bg-white`}>
                   <h3 className="text-2xl font-bold text-gray-900">{solution.title}</h3>
                   <p className="text-gray-600 mt-2 min-h-[72px]">{solution.description}</p>
                   <div className="mt-6 text-purple-600 font-semibold flex items-center gap-2 transition-transform duration-300 group-hover:translate-x-1">

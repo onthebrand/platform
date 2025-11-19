@@ -336,15 +336,15 @@ export default function DiagnosisCalculator() {
     };
 
     return (
-        <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-6xl mx-auto w-full text-gray-900 border-2 border-purple-300">
-            <h3 className="text-2xl font-bold text-center text-gray-800 mb-8">Cotiza tu Diagnóstico</h3>
+        <div className="bg-white p-6 md:p-8 rounded-2xl shadow-2xl max-w-6xl mx-auto w-full text-gray-900 border-2 border-purple-300">
+            <h3 className="text-2xl font-bold text-center text-gray-800 mb-8 md:mb-8">Cotiza tu Diagnóstico</h3>
             <form onSubmit={handleSubmit} onKeyDown={handleKeyDown} className="grid md:grid-cols-2 gap-12">
-                {/* Columna de resultado (ahora a la izquierda) */}
-                <div className="bg-gray-50 rounded-xl p-8 flex flex-col justify-center items-center text-center order-2 md:order-1">
+                {/* Columna de resultado (oculta en móvil) */}
+                <div className="hidden md:flex bg-gray-50 rounded-xl p-8 flex-col justify-center items-center text-center order-2 md:order-1">
                     <AnimatePresence mode="wait">
                         {!showResult ? (
                             <motion.div key="prompt" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col items-center">
-                                <h4 className="font-bold text-xl text-gray-800 mb-8">Completa el formulario para conocer el valor estimado de tu diagnóstico.</h4>
+                                <h4 className="font-bold text-xl text-gray-800 mb-8">Completa el formulario para conocer el valor de tu diagnóstico.</h4>
                                 <motion.div
                                     initial={{ x: 0 }}
                                     animate={{ x: [10, 0, 10] }}
@@ -353,12 +353,12 @@ export default function DiagnosisCalculator() {
                                     <svg width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <defs>
                                             <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                                <stop offset="0%" style={{stopColor: '#00bcd4', stopOpacity: 1}} />
-                                                <stop offset="100%" style={{stopColor: '#9c00ff', stopOpacity: 1}} />
+                                                <stop offset="0%" style={{ stopColor: '#00bcd4', stopOpacity: 1 }} />
+                                                <stop offset="100%" style={{ stopColor: '#9c00ff', stopOpacity: 1 }} />
                                             </linearGradient>
                                         </defs>
-                                        <path d="M5 12H19" stroke="url(#arrowGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                        <path d="M12 5L19 12L12 19" stroke="url(#arrowGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        <path d="M5 12H19" stroke="url(#arrowGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M12 5L19 12L12 19" stroke="url(#arrowGradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                 </motion.div>
                             </motion.div>
@@ -391,9 +391,9 @@ export default function DiagnosisCalculator() {
                 </div>
 
                 {/* Columna del formulario (ahora a la derecha) */}
-                <div className="flex flex-col justify-between order-1 md:order-2 min-h-[500px]">
+                <div className="flex flex-col order-1 md:order-2">
                     <AnimatePresence mode="wait">
-                    {!showResult ? (
+                        {!showResult ? (
                         <motion.div key="form-content" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                             <Progress value={progress} className="mb-4" />
                             <AnimatePresence mode="wait">
@@ -421,12 +421,30 @@ export default function DiagnosisCalculator() {
                                 )}
                             </div>
                         </motion.div>
-                    ) : (
-                        <motion.div key="form-success" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center h-full text-center">
-                             <h3 className="text-2xl font-bold text-gray-900">Gracias por cotizar tu diagnóstico.</h3>
-                             <p className="text-gray-600 mt-2">Pronto nos pondremos en contacto a tu correo.</p>
-                        </motion.div>
-                    )}
+                        ) : (
+                            <motion.div key="form-success" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center h-full text-center">
+                                 <h3 className="text-2xl font-bold text-gray-900">Gracias por cotizar tu diagnóstico.</h3>
+                                 <p className="text-gray-600 mt-2">Pronto nos pondremos en contacto a tu correo.</p>
+                            </motion.div>
+                        )}
+
+                        {/* "Este valor incluye..." box - visible solo antes de que se muestre el resultado */}
+                        {!showResult && (
+                            <div className="text-left text-xs text-gray-500 mt-10 border-t pt-6 w-full bg-gray-50 p-4 rounded-lg">
+                                <p className="font-semibold mb-2">Este valor incluye:</p>
+                                <ul className="list-disc list-inside space-y-1">
+                                    <li>Semáforo de evaluación general y por canal.</li>
+                                    <li>Análisis y auditoría técnica completa.</li>
+                                    <li>Análisis de contenidos y anuncios.</li>
+                                    <li>Informe en detalle del estado de los canales digitales.</li>
+                                    <li>Análisis Competitivo (Benchmarking)</li>
+                                    <li>Análisis de Mercado</li>
+                                    <li>Espacios de mejora, hallazgos y oportunidades.</li>
+                                    <li>Reunión de presentación de resultados.</li>
+                                </ul>
+                                <p className="mt-4 italic">El valor final puede variar y será confirmado en la propuesta comercial. Cuentas, accesos y data comercial, proporcionada por el cliente.</p>
+                            </div>
+                        )}
                     </AnimatePresence>
                 </div>
             </form>
