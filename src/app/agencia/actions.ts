@@ -1,8 +1,6 @@
 "use server";
 
 import nodemailer from 'nodemailer';
-import path from 'path';
-import fs from 'fs/promises';
 
 interface DiagnosisFormData {
   name: string;
