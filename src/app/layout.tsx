@@ -27,7 +27,6 @@ export const metadata = {
     locale: 'es_CL',
     type: 'website',
   },
-  manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

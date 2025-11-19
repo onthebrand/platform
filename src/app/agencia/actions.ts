@@ -50,16 +50,15 @@ async function sendAdminNotification(data: DiagnosisFormData) {
 
 async function sendUserConfirmation(data: DiagnosisFormData) {
   try {
-    const logoPath = path.resolve(process.cwd(), 'public', 'logo-white.png');
-    const logoBuffer = await fs.readFile(logoPath);
-
     const transporter = createTransporter();
     const formattedPrice = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(data.calculatedPrice);
+    // Usamos una variable de entorno para la URL base, o un valor predeterminado.
+    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
 
     const emailHtml = `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: auto; border: 1px solid #ddd; border-radius: 12px; overflow: hidden;">
         <div style="background-color: #111827; padding: 20px; text-align: center;">
-          <img src="cid:onthebrandlogo" alt="Onthebrand Logo" style="height: 100px; width: auto; margin: auto;">
+          <img src="${baseUrl}/logo-white.png" alt="Onthebrand Logo" style="height: 100px; width: auto; margin: auto;">
         </div>
         <div style="padding: 30px;">
           <h2 style="color: #333;">Hola ${data.name},</h2>
@@ -97,13 +96,6 @@ async function sendUserConfirmation(data: DiagnosisFormData) {
       to: data.email,
       subject: `Tu cotización de Diagnóstico Digital de Onthebrand`,
       html: emailHtml,
-      attachments: [
-        {
-          filename: 'logo-white.png',
-          content: logoBuffer,
-          cid: 'onthebrandlogo' // Este es el Content-ID que usamos en el src de la imagen
-        }
-      ]
     });
     console.log('Correo de confirmación para usuario enviado exitosamente.');
   } catch (error) {
