@@ -321,9 +321,9 @@ export default function DiagnosisCalculator() {
             case 'assets': return formData.assets.length === 0;
             case 'database': return !formData.database;
             case 'database_size': return formData.database === 'si' && !formData.database_size;
-            case 'website': return !formData.website;
             case 'website':
-                const urlRegex = /^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}$/;
+                // Valida que el texto tenga un formato de dominio válido (ej: empresa.com, mi-sitio.cl)
+                const urlRegex = /^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,63}$/;
                 return !urlRegex.test(formData.website);
             case 'ecommerce': return !formData.ecommerce;
             case 'competitors': return formData.competitors.filter(c => c.trim() !== '').length < 3;
