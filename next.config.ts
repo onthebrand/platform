@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
       {
         source: '/plataforma/nutonia/:path*',
         destination: 'https://onthebrand-neurolearn.vercel.app/:path*',
+      },
+      {
+        source: '/clientes/the-lift/belba',
+        destination: 'https://onthebrand-dashboard-clinica-belba.vercel.app',
+      },
+      {
+        source: '/clientes/the-lift/belba/:path*',
+        destination: 'https://onthebrand-dashboard-clinica-belba.vercel.app/:path*',
       }
     ];
   }
